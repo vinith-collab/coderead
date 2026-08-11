@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ongoing Problems - CookDCode</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="../css/ongoingprograms.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+    <script>
+      // Global priority dropdown toggle - defined early for instant response
+      window.toggleDropdown = (e) => {
+        if (e) e.stopPropagation();
+        const dropdown = document.getElementById('dropdownMenu');
+        if (dropdown) {
+          dropdown.classList.toggle('active');
+        }
+      };
+    </script>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close Menu">
+        <i class="fas fa-times"></i>
+      </button>
+      <nav class="sidebar-nav">
+        <a href="ctc.html" class="sidebar-link">
+          <i class="fas fa-th-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="ongoingprograms.html" class="sidebar-link active">
+          <i class="fas fa-spinner fa-spin-hover"></i>
+          <span>Ongoing Programs</span>
+        </a>
+        <a href="completed-programs.html" class="sidebar-link">
+          <i class="fas fa-check-circle"></i>
+          <span>Completed Programs</span>
+        </a>
+        
+
+      </nav>
+      
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <nav class="navbar">
+        <div class="nav-left">
+          <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu" style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
+
+          <a href="ctc.html" class="brand">
+            <img src="../Images/logo.png" alt="cookDcode Logo" class="logo" />
+            <span>cookDcode</span>
+          </a>
+        </div>
+
+        <div class="navbar-right">
+          <!-- Token Display -->
+          <div id="tokenDisplay" class="token-display" title="Your available tokens">
+            <div class="token-icon">
+              <i class="fas fa-coins"></i>
+            </div>
+            <span class="token-label">Tokens:</span>
+            <span class="token-count" id="tokenCount">0</span>
+          </div>
+
+          <div class="profile-menu">
+            <button class="avatar-btn" id="avatarBtn" onclick="toggleDropdown(event)" aria-label="User Profile">
+              <img src="../Images/profile.jpg" alt="Profile Avatar" id="userAvatar" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23f8fafc%22%2F%3E%3Cpath%20d%3D%22M12%2012c2.21%200%204-1.79%204-4s-1.79-4-4-4-4%201.79-4%204%201.79%204%204%204zm0%202c-2.67%200-8%201.34-8%204v2h16v-2c0-2.66-5.33-4-8-4z%22%20fill%3D%22%2394a3b8%22%2F%3E%3C%2Fsvg%3E';" />
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+              <div class="dropdown-header">
+                <span class="dropdown-title">Welcome,</span>
+                <span class="dropdown-email" id="dropdownEmail">User Name</span>
+              </div>
+              <a href="edit-profile.html" class="dropdown-item">
+                <i class="fas fa-user-edit"></i>
+                Edit Profile
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt"></i>
+                Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+  <main class="container">
+    <div id="skeletonContainer" class="cards-grid">
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+      <div class="skeleton-card"></div>
+    </div>
+    <div id="actualContent"></div>
+  </main>
+
+
+
+
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    /* Firebase Config */
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBoAb7b3DJDMRmNwOSAHTnscM_-JuVnILI",
+      authDomain: "cookdcode-4ce23.firebaseapp.com",
+      databaseURL: "https://cookdcode-4ce23-default-rtdb.firebaseio.com",
+      projectId: "cookdcode-4ce23",
+      storageBucket: "cookdcode-4ce23.firebasestorage.app",
+      messagingSenderId: "419836764054",
+      appId: "1:419836764054:web:ab9968082fb793029f07b7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const uid =
+      localStorage.getItem("userId") ||
+      localStorage.getItem("uid");
+
+
+    async function loadUserProfile() {
+      if (!uid) return;
+      try {
+        const userRef = ref(db, "users/" + uid);
+        const snapshot = await get(userRef);
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          if (data.profileImage) {
+            document.getElementById("userAvatar").src = data.profileImage;
+          }
+          // Display User Name
+          const userName = data.firstname ? (data.firstname + " " + (data.lastname || "")) : (localStorage.getItem("userEmail") || "User");
+          document.getElementById("dropdownEmail").textContent = userName;
+          
+          if (data.tokens !== undefined) {
+            document.getElementById("tokenCount").textContent = data.tokens;
+          }
+        }
+      } catch (err) {
+        console.error("Profile load error:", err);
+      }
+    }
+
+    /* CALL FUNCTION */
+
+    loadUserProfile();
+
+
+    const container = document.querySelector(".carousel-section");
+    /* Open challenge */
+
+    window.openProblem = function (category, problemID) {
+
+      window.location.href =
+        "tryctc.html?category=" +
+        encodeURIComponent(category) +
+        "&problemID=" +
+        encodeURIComponent(problemID);
+
+    };
+
+    /* Load ongoing programs */
+
+    async function loadOngoingPrograms() {
+      if (!uid) {
+        document.getElementById("actualContent").innerHTML = "<p style='padding:4rem;'>Please log in to view ongoing programs.</p>";
+        document.getElementById("skeletonContainer").style.display = 'none';
+        return;
+      }
+
+      try {
+        // PARALLEL FETCH - Much Faster!
+        const [profileSnap, progressSnap] = await Promise.all([
+          get(ref(db, "users/" + uid)),
+          get(ref(db, `userProgress/${uid}/programs`))
+        ]);
+
+        // 1. Update Profile (Internal UI)
+        if (profileSnap.exists()) {
+          const data = profileSnap.val();
+          if (data.profileImage) document.getElementById("userAvatar").src = data.profileImage;
+          
+          // Display User Name
+          const userName = data.firstname ? (data.firstname + " " + (data.lastname || "")) : (localStorage.getItem("userEmail") || "User");
+          document.getElementById("dropdownEmail").textContent = userName;
+          
+          if (data.tokens !== undefined) document.getElementById("tokenCount").textContent = data.tokens;
+        } else {
+          // If profile doesn't exist, set default avatar and email
+          document.getElementById("userAvatar").src = "https://ui-avatars.com/api/?name=User&background=3a86cc&color=fff&rounded=true";
+          document.getElementById("dropdownEmail").textContent = "Guest User";
+        }
+
+        // 2. Clear skeletons and show content
+        const actualContent = document.getElementById("actualContent");
+        document.getElementById("skeletonContainer").style.display = 'none';
+
+        if (!progressSnap.exists()) {
+          actualContent.innerHTML = `
+            <p style="padding: 2rem; color: #64748b; font-weight: 500;">No ongoing programs found. Start a new challenge from the dashboard!</p>
+          `;
+          return;
+        }
+
+        const progressData = progressSnap.val();
+        let sectionsFound = false;
+        let sectionsHTML = "";
+
+        // PREDEFINED ORDER (SOPHISTICATED HIERARCHY)
+        const orderedCategories = [
+          { key: "fundamentals", name: "Fundamentals", phase: "1" },
+          { key: "string", name: "String", phase: "2" },
+          { key: "array", name: "Array", phase: "3" },
+          { key: "dsa", name: "DSA", phase: "4" }
+        ];
+
+        orderedCategories.forEach(catInfo => {
+          const category = catInfo.key;
+          if (progressData[category]) {
+            let cardsHTML = "";
+            let categoryCount = 0;
+
+            for (let problemID in progressData[category]) {
+              let progress = progressData[category][problemID].progress || 0;
+
+              // Only ongoing problems (1% to 99%)
+              if (progress > 0 && progress < 100) {
+                categoryCount++;
+                let number = problemID.replace("problem", "");
+                number = parseInt(number) || 0;
+                let offset = 251.2 - (251.2 * progress / 100);
+
+                cardsHTML += `
+                <div class="card ongoing">
+                  <span class="card-badge">Problem ${number}</span>
+                  <div class="progress-container">
+                    <svg class="progress-svg" viewBox="0 0 100 100">
+                      <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                      <circle class="progress-bar" cx="50" cy="50" r="40" style="stroke-dashoffset:${offset}"></circle>
+                    </svg>
+                    <div class="progress-text">
+                      <span class="value">${progress}</span>
+                      <span class="percent">%</span>
+                    </div>
+                  </div>
+                  <a href="#" class="btn" onclick="openProblem('${category}','${problemID}')">Continue Challenge</a>
+                </div>
+              `;
+              }
+            }
+
+            if (categoryCount > 0) {
+              sectionsFound = true;
+              sectionsHTML += `
+              <div class="category-section">
+                <h2 class="category-title">
+                  <span class="phase-tag">Phase ${catInfo.phase}</span>
+                  <span class="category-name">${catInfo.name}</span>
+                </h2>
+                <div class="cards-grid">
+                  ${cardsHTML}
+                </div>
+              </div>
+            `;
+            }
+          }
+        });
+
+        if (!sectionsFound) {
+          actualContent.innerHTML = `
+            <p style="padding: 2rem; color: #64748b; font-weight: 500;">No challenges currently in progress.</p>
+          `;
+        } else {
+          actualContent.innerHTML = sectionsHTML;
+        }
+      } catch (err) {
+        console.error("Error loading ongoing programs or profile:", err);
+        document.getElementById("skeletonContainer").style.display = 'none';
+        document.getElementById("actualContent").innerHTML = `
+          <p style="padding: 2rem; color: #ef4444; font-weight: 500;">Failed to load challenges. Please try again later.</p>
+        `;
+      }
+    }
+
+    // Modal Utility
+    window.showModal = function(msg, type = 'success') {
+      const modal = document.getElementById('statusModal');
+      const icon = document.getElementById('modalIcon');
+      const title = document.getElementById('modalTitle');
+      const message = document.getElementById('modalMessage');
+      
+      message.textContent = msg;
+      
+      if(type === 'error' || type === 'warning') {
+        icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        icon.style.color = '#ef4444';
+        icon.style.backgroundColor = '#fef2f2';
+        title.textContent = 'Action Required';
+      } else {
+        icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+        icon.style.color = '#10b981';
+        icon.style.backgroundColor = '#ecfdf5';
+        title.textContent = 'Success!';
+      }
+      modal.classList.add('active');
+    };
+
+    window.closeModal = function() {
+      document.getElementById('statusModal').classList.remove('active');
+    };
+
+    async function initializeOngoing() {
+      if (!uid) {
+        setTimeout(() => {
+          showModal("Welcome! Please login or explore the challenges as a new user.", "error");
+          const modalBtn = document.querySelector('#statusModal .modal-btn');
+          if (modalBtn) {
+            modalBtn.onclick = () => { window.location.href = "newuser.html"; };
+          }
+        }, 300);
+        return;
+      }
+      await loadOngoingPrograms();
+    }
+
+    initializeOngoing();
+
+
+    
+    // Close dropdown on outside click
+    document.addEventListener('click', (e) => {
+        const dropdown = document.getElementById('dropdownMenu');
+        const btn = document.getElementById('avatarBtn');
+        if (dropdown && !dropdown.contains(e.target) && !btn.contains(e.target)) {
+            dropdown.classList.remove('active');
+        }
+    });
+
+
+
+    const mobileToggle = document.getElementById('mobileToggle');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const sidebar = document.getElementById('sidebar');
+
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        sidebar.classList.add('mobile-active');
+      });
+    }
+
+    if (sidebarClose) {
+      sidebarClose.addEventListener('click', () => {
+        sidebar.classList.remove('mobile-active');
+      });
+    }
+
+    window.logoutUser = () => {
+      localStorage.clear();
+      window.location.href = "login.html";
+    };
+  </script>
+
+  <!-- Professional Status Modal -->
+  <div id="statusModal" class="modal-overlay">
+    <div class="modal-content">
+      <div id="modalIcon" class="modal-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3 id="modalTitle" class="modal-title">Success!</h3>
+      <p id="modalMessage" class="modal-message">Your progress has been saved.</p>
+      <button class="modal-btn" onclick="closeModal()">Continue</button>
+    </div>
+  </div>
+    </div>
+  </div>
+</body>
+
+</html>

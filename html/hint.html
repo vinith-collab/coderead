@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cookDcode - Hint Management</title>
+  <link rel="icon" type="image/png" href="../Images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/hint.css">
+  <link rel="stylesheet" href="../css/dashboard.css">
+</head>
+
+<body>
+
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-nav">
+        <a href="ctc.html" class="sidebar-link">
+          <i class="fas fa-th-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="ongoingprograms.html" class="sidebar-link">
+          <i class="fas fa-spinner fa-spin-hover"></i>
+          <span>Ongoing Programs</span>
+        </a>
+        <a href="completed-programs.html" class="sidebar-link">
+          <i class="fas fa-check-circle"></i>
+          <span>Completed Programs</span>
+        </a>
+        
+        <div class="sidebar-divider"></div>
+        
+        <a href="edit-profile.html" class="sidebar-link">
+          <i class="fas fa-user-circle"></i>
+          <span>Edit Profile</span>
+        </a>
+        <a href="hint.html" class="sidebar-link active">
+          <i class="fas fa-lightbulb"></i>
+          <span>Help & Hints</span>
+        </a>
+      </nav>
+      
+      <div class="sidebar-footer">
+        <a href="#" class="sidebar-link" style="color: #ef4444;" onclick="logoutUser()">
+          <i class="fas fa-sign-out-alt"></i>
+          <span>Log Out</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <nav class="navbar">
+        <div class="nav-left">
+          <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu" style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
+          <a href="ctc.html" class="brand">
+            <img src="../Images/logo.png" alt="cookDcode Logo" class="logo" />
+            <span>cookDcode</span>
+          </a>
+        </div>
+
+        <div class="navbar-right">
+          <!-- Token Display -->
+          <div id="tokenDisplay" class="token-display" title="Your available tokens">
+            <div class="token-icon">
+              <i class="fas fa-coins"></i>
+            </div>
+            <span class="token-label">Tokens:</span>
+            <span class="token-count" id="tokenCount">0</span>
+          </div>
+
+          <div class="profile-menu">
+            <button class="avatar-btn" id="avatarBtn" aria-label="User Profile">
+              <img src="Images/profile.jpg" alt="Profile Avatar" id="userAvatar" onerror="this.onerror=null;this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Crect%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22%23f8fafc%22%2F%3E%3Cpath%20d%3D%22M12%2012c2.21%200%204-1.79%204-4s-1.79-4-4-4-4%201.79-4%204%201.79%204%204%204zm0%202c-2.67%200-8%201.34-8%204v2h16v-2c0-2.66-5.33-4-8-4z%22%20fill%3D%22%2394a3b8%22%2F%3E%3C%2Fsvg%3E';" />
+            </button>
+            <div class="dropdown-menu" id="dropdownMenu">
+              <div class="dropdown-header">
+                <span class="dropdown-title">Login Profile</span>
+                <span class="dropdown-email" id="dropdownEmail">user@example.com</span>
+              </div>
+              <a href="edit-profile.html" class="dropdown-item"><i class="fas fa-user-edit"></i> Edit Profile</a>
+              <a href="completed-programs.html" class="dropdown-item"><i class="fas fa-check-circle"></i> Completed
+                Programs</a>
+              <a href="ongoingprograms.html" class="dropdown-item"><i class="fas fa-tasks"></i> Ongoing Problems</a>
+              <div style="border-top: 1px solid var(--border); margin: 0.5rem 0;"></div>
+              <a href="#" class="dropdown-item" style="color:#ef4444;" onclick="logoutUser()">
+                <i class="fas fa-sign-out-alt" style="color:#ef4444;"></i> Log Out
+              </a>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+  <div class="container">
+    <div class="card">
+      <h2 class="section-title"><i class="fas fa-magic"></i> Hint Generator</h2>
+
+      <div class="grid-header">
+        <div class="input-group">
+          <label>Program Name</label>
+          <input type="text" id="programName" placeholder="e.g. Factorial Program">
+        </div>
+
+        <div class="input-group">
+          <label>Problem Number</label>
+          <input type="number" id="problemNo" placeholder="01">
+        </div>
+
+        <div class="input-group">
+          <label>Category</label>
+          <select id="category">
+            <option value="">Select Category</option>
+            <option value="Fundamentals">Fundamentals</option>
+            <option value="DSA">DSA</option>
+            <option value="String">String</option>
+            <option value="Array">Array</option>
+          </select>
+        </div>
+      </div>
+
+      <h2 class="section-title" style="margin-top: 1rem;"><i class="fas fa-table"></i> Data Table</h2>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th class="sno-cell">S.No</th>
+              <th style="width: 180px;">Category</th>
+              <th>Sample Input</th>
+              <th>Target Keyword</th>
+              <th>Hint Message</th>
+              <th style="width:80px; text-align:center;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody">
+            <tr>
+              <td class="sno-cell">1</td>
+              <td>
+                <select>
+                  <option value="logic">Logic</option>
+                  <option value="recipe">Recipe</option>
+                  <option value="ingredients">Ingredients</option>
+                  <option value="sample">Sample</option>
+                </select>
+              </td>
+              <td><input type="text" placeholder="Explain logic..."></td>
+              <td><input type="text" placeholder="Key term"></td>
+              <td><input type="text" placeholder="Helpful hint"></td>
+              <td style="text-align:center;">
+                <button class="btn-delete" onclick="deleteRow(this)" title="Delete Row">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="btn-container">
+        <button class="btn-add" onclick="addRow()">
+          <i class="fas fa-plus"></i> Add New Row
+        </button>
+
+        <button class="btn-create" onclick="createProgram()">
+          <i class="fas fa-cloud-upload-alt"></i> SAVE HINT SHEET
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast">
+    <i class="fas fa-check-circle"></i> Hint Sheet Saved Successfully!
+  </div>
+
+  <!-- Professional Alert Modal -->
+  <div id="alertModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3 class="modal-title">Action Required</h3>
+      <p id="modalMessage" class="modal-message">At least one row is required.</p>
+      <button class="modal-btn" onclick="closeModal()">Got it</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBoAb7b3DJDMRmNwOSAHTnscM_-JuVnILI",
+      authDomain: "cookdcode-4ce23.firebaseapp.com",
+      databaseURL: "https://cookdcode-4ce23-default-rtdb.firebaseio.com",
+      projectId: "cookdcode-4ce23",
+      storageBucket: "cookdcode-4ce23.appspot.com",
+      messagingSenderId: "419836764054",
+      appId: "1:419836764054:web:63e6752e821a79a29f07b7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Add Row
+    window.addRow = function () {
+      const table = document.getElementById("tableBody");
+      const rowCount = table.rows.length + 1;
+
+      const newRow = `
+      <tr>
+        <td class="sno-cell">${rowCount}</td>
+        <td>
+          <select>
+            <option value="logic">Logic</option>
+            <option value="recipe">Recipe</option>
+            <option value="ingredients">Ingredients</option>
+            <option value="sample">Sample</option>
+          </select>
+        </td>
+        <td><input type="text" placeholder="Explain logic..."></td>
+        <td><input type="text" placeholder="Key term"></td>
+        <td><input type="text" placeholder="Helpful hint"></td>
+        <td style="text-align:center;">
+          <button class="btn-delete" onclick="deleteRow(this)" title="Delete Row">
+             <i class="fas fa-trash-alt"></i>
+          </button>
+        </td>
+      </tr>
+    `;
+      table.insertAdjacentHTML("beforeend", newRow);
+    };
+
+    // Delete Row
+    window.deleteRow = function (btn) {
+      const table = document.getElementById("tableBody");
+      if (table.rows.length <= 1) {
+        showModal("You must have at least one row in the table.");
+        return;
+      }
+      const row = btn.closest("tr");
+      row.remove();
+
+      // Re-index S.No
+      Array.from(table.rows).forEach((r, index) => {
+        r.cells[0].textContent = index + 1;
+      });
+    };
+
+    // Modal Functions
+    window.showModal = function (msg) {
+      document.getElementById("modalMessage").textContent = msg;
+      document.getElementById("alertModal").classList.add("active");
+    };
+
+    window.closeModal = function () {
+      document.getElementById("alertModal").classList.remove("active");
+    };
+
+    // Get Data
+    function getTableData() {
+      const rows = document.querySelectorAll("#tableBody tr");
+      const finalData = {};
+
+      rows.forEach((row) => {
+        const category = row.cells[1].querySelector("select").value;
+        const userInput = row.cells[2].querySelector("input").value;
+        const keyword = row.cells[3].querySelector("input").value;
+        const hint = row.cells[4].querySelector("input").value;
+
+        if (!finalData[category]) {
+          finalData[category] = [];
+        }
+
+        finalData[category].push({
+          question: userInput,
+          keyword: keyword,
+          hint: hint
+        });
+      });
+      return finalData;
+    }
+
+    // Save Data
+    window.createProgram = function () {
+      const name = document.getElementById("programName").value;
+      const no = document.getElementById("problemNo").value;
+      const category = document.getElementById("category").value.toLowerCase();
+
+      if (name === "" || no === "" || category === "") {
+        showModal("Please provide a Program Name, Problem Number, and Category before saving.");
+        return;
+      }
+
+      const problemId = "problem" + String(no).padStart(2, '0');
+      const tableData = getTableData();
+
+      set(ref(db, "hint/" + category + "/" + problemId), {
+        programName: name,
+        problemNo: parseInt(no),
+        data: tableData
+      })
+        .then(() => {
+          const toast = document.getElementById("toast");
+          toast.classList.add("show");
+          setTimeout(() => {
+            toast.classList.remove("show");
+            location.reload();
+          }, 2000);
+        })
+        .catch(err => {
+          alert("Error: " + err.message);
+        });
+    };
+  </script>
+
+  <script>
+    // Profile Dropdown Logic
+    document.getElementById('avatarBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.getElementById('dropdownMenu').classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('dropdownMenu');
+      if (dropdown && !dropdown.contains(e.target) && !e.target.closest('#avatarBtn')) {
+        dropdown.classList.remove('active');
+      }
+    });
+
+    // Mobile Toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('mobile-active');
+      });
+    }
+
+    window.logoutUser = () => {
+      localStorage.clear();
+      window.location.href = "login.html";
+    };
+  </script>
+    </div>
+  </div>
+</body>
+
+</html>

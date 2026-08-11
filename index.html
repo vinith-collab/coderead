@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <script>
+        // Check if user is logged in
+        const uid = localStorage.getItem("userId") || localStorage.getItem("uid");
+        if (uid) {
+            window.location.href = "html/ctc.html";
+        } else {
+            window.location.href = "html/newuser.html";
+        }
+    </script>
+</head>
+<body>
+    <p>Redirecting to <a href="html/newuser.html">home page</a>...</p>
+</body>
+</html>

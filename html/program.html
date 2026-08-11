@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>cookDcode - Program Creation</title>
+
+<style>
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background-color: #f0f6fc;
+  color: #1e293b;
+  min-height: 100vh;
+}
+
+.header {
+  background: rgba(58, 134, 204, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 800;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  text-align: center;
+  margin: 3rem 0 2rem;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  color: #1e40af;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+
+.container {
+  width: 90%;
+  max-width: 800px;
+  margin: 0 auto 4rem;
+  background: white;
+  padding: clamp(1.5rem, 5vw, 3rem);
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(58, 134, 204, 0.1);
+}
+
+label {
+  color: #475569;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  border-radius: 0.75rem;
+  border: 2px solid #e2e8f0;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+  background: #f8fafc;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #3a86cc;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(58, 134, 204, 0.1);
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 3rem;
+  border: none;
+  background: #3a86cc;
+  color: white;
+  font-size: 1.125rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  font-weight: 800;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 6px -1px rgba(58, 134, 204, 0.2);
+  width: 100%;
+}
+
+button:hover {
+  background: #2c6ba6;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(58, 134, 204, 0.3);
+}
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.4);
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+
+.modal-box{
+background:white;
+padding:30px;
+width:380px;
+border-radius:10px;
+text-align:center;
+box-shadow:0 8px 25px rgba(0,0,0,0.2);
+font-family:Arial;
+}
+
+.modal-box h3{
+margin-bottom:10px;
+}
+
+.modal-box p{
+color:#555;
+margin-bottom:25px;
+}
+
+.modal-buttons{
+display:flex;
+justify-content:space-between;
+}
+
+.modal-buttons button{
+padding:10px 25px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-size:14px;
+}
+
+.no-btn{
+background:#e5e5e5;
+}
+
+.no-btn:hover{
+background:#d4d4d4;
+}
+
+.yes-btn{
+background:#2b6cb0;
+color:white;
+}
+
+.yes-btn:hover{
+background:#1f4f87;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+cookDcode - Program Creation
+</div>
+
+<div class="title">
+Create New Program
+</div>
+
+<div class="container">
+
+<label>PROGRAM NAME</label>
+<input type="text" id="programName" placeholder="Enter program name">
+
+<label>PROBLEM NUMBER</label>
+<input type="number" id="problemNo" placeholder="Enter problem number">
+
+<label>DESCRIPTION</label>
+<textarea id="description" placeholder="Enter program description"></textarea>
+
+<label>PROGRAM CATEGORY</label>
+<select id="category">
+
+<option value="">Select Category</option>
+<option value="Fundamentals">Fundamentals</option>
+<option value="DSA">DSA</option>
+<option value="String">String</option>
+<option value="Array">Array</option>
+</select>
+
+<label>LOGIC</label>
+<textarea id="logic" placeholder="Enter program logic"></textarea>
+
+<label>Logic-keyword</label>
+<textarea id="logic-keyword" placeholder="Enter logic keywords"></textarea>
+
+<label>RECIPE</label>
+<textarea id="recipe" placeholder="Enter recipe (steps to solve)"></textarea>
+
+<label>Recipe-keyword</label>
+<textarea id="recipe-keyword" placeholder="Enter recipe keywords"></textarea>
+
+<label>INGREDIENTS</label>
+<textarea id="ingredients" placeholder="Enter ingredients needed"></textarea>
+
+<label>Ingredients-keyword</label>
+<textarea id="ingredients-keyword" placeholder="Enter ingredients keywords"></textarea>
+
+<label>TASTE THE SAMPLE</label>
+<textarea id="sample" placeholder="Enter sample input/output"></textarea>
+
+<label>Taste the Sample-keyword</label>
+<textarea id="sample-keyword" placeholder="Enter sample input/output keywords"></textarea>
+
+<button onclick="createProgram()">Create</button>
+
+<div id="confirmPopup" class="modal">
+
+  <div class="modal-box">
+
+      <h3>Program Created Successfully</h3>
+      <p>Do you want to view the challenges?</p>
+
+      <div class="modal-buttons">
+
+          <button class="no-btn" onclick="closePopup()">No</button>
+
+          <button class="yes-btn" id="yesBtn">Yes</button>
+
+      </div>
+
+  </div>
+
+</div>
+
+</div>
+
+
+
+<script type="module">
+
+// Firebase Import
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// Firebase Config
+const firebaseConfig = {
+  apiKey: "AIzaSyBoAb7b3DJDMRmNwOSAHTnscM_-JuVnILI",
+  authDomain: "cookdcode-4ce23.firebaseapp.com",
+  databaseURL: "https://cookdcode-4ce23-default-rtdb.firebaseio.com",
+  projectId: "cookdcode-4ce23",
+  storageBucket: "cookdcode-4ce23.firebasestorage.app",
+  messagingSenderId: "419836764054",
+  appId: "1:419836764054:web:ab9968082fb793029f07b7"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+// Redirect when clicking YES
+document.getElementById("yesBtn").addEventListener("click", function(){
+    window.location.href = "ctc.html";
+});
+
+
+// Popup Functions
+function showPopup(){
+    document.getElementById("confirmPopup").style.display = "flex";
+}
+
+window.closePopup = function(){
+    document.getElementById("confirmPopup").style.display = "none";
+};
+
+
+// Create Program Function
+window.createProgram = function(){
+
+let programName = document.getElementById("programName").value.trim();
+let problemNo = document.getElementById("problemNo").value;
+let category = document.getElementById("category").value;
+let description = document.getElementById("description").value.trim();
+let logic = document.getElementById("logic").value.trim();
+let logicKeyword = document.getElementById("logic-keyword").value.trim();
+let recipe = document.getElementById("recipe").value.trim();
+let recipeKeyword = document.getElementById("recipe-keyword").value.trim();
+let ingredients = document.getElementById("ingredients").value.trim();
+let ingredientsKeyword = document.getElementById("ingredients-keyword").value.trim();
+let sample = document.getElementById("sample").value.trim();
+let sampleKeyword = document.getElementById("sample-keyword").value.trim();
+
+// Validation
+if(programName === "" || problemNo === "" || description === "" || category === "" 
+|| logic === "" || logicKeyword === "" || recipe === "" || recipeKeyword === "" 
+|| ingredients === "" || ingredientsKeyword === "" || sample === "" || sampleKeyword === ""){
+alert("Please fill all fields");
+return;
+}
+
+
+// Convert category → lowercase (important for display page)
+category = category.toLowerCase();
+
+
+// Convert problem number → problem01 format
+let formattedProblem = "problem" + String(problemNo).padStart(2,'0');
+
+
+// Generate Unique Program ID
+let programID = "PROG_" + Date.now();
+
+
+// Store in Firebase
+set(ref(db, "programs/" + category + "/" + formattedProblem), {
+
+programId: programID,
+programName: programName,
+problemNumber: parseInt(problemNo),
+category: category,
+description: description,
+
+logic: logic,
+logicKeyword: logicKeyword,
+recipe: recipe,
+recipeKeyword: recipeKeyword,
+ingredients: ingredients,
+ingredientsKeyword: ingredientsKeyword,
+sample: sample,
+sampleKeyword: sampleKeyword,
+
+progress: 0
+
+})
+.then(() => {
+
+showPopup();
+
+// Clear form
+document.getElementById("programName").value="";
+document.getElementById("problemNo").value="";
+document.getElementById("description").value="";
+document.getElementById("category").value="";
+document.getElementById("logic").value="";
+document.getElementById("logic-keyword").value="";
+document.getElementById("recipe").value="";
+document.getElementById("recipe-keyword").value="";
+
+document.getElementById("ingredients").value="";
+document.getElementById("ingredients-keyword").value="";
+document.getElementById("sample").value="";
+document.getElementById("sample-keyword").value="";
+
+})
+.catch((error) => {
+
+alert("Error: " + error);
+
+});
+
+}
+
+</script>
+
+</body>
+</html>

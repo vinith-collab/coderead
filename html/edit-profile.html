@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edit Profile - CookDCode</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" />
+  <link rel="stylesheet" href="../css/edit-profile.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+  <style>
+    .cropper-view-box, .cropper-face {
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <nav class="sidebar-nav">
+        <a href="ctc.html" class="sidebar-link">
+          <i class="fas fa-th-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="ongoingprograms.html" class="sidebar-link">
+          <i class="fas fa-spinner fa-spin-hover"></i>
+          <span>Ongoing Programs</span>
+        </a>
+        <a href="completed-programs.html" class="sidebar-link">
+          <i class="fas fa-check-circle"></i>
+          <span>Completed Programs</span>
+        </a>
+        
+
+      </nav>
+      
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="main-content">
+      <nav class="navbar">
+        <div class="nav-left">
+          <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu" style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
+          <a href="ctc.html" class="brand">
+            <img src="../Images/logo.png" alt="cookDcode Logo" class="logo" />
+            <span>cookDcode</span>
+          </a>
+        </div>
+
+        <div class="navbar-right">
+          <!-- Token Display -->
+          <div id="tokenDisplay" class="token-display" title="Your available tokens">
+            <div class="token-icon">
+              <i class="fas fa-coins"></i>
+            </div>
+            <span class="token-label">Tokens:</span>
+            <span class="token-count" id="tokenCount">0</span>
+          </div>
+        </div>
+      </nav>
+
+  <main>
+    <div class="profile-container">
+      <form id="profileForm" class="profile-card">
+
+        <div class="form-content">
+          <div class="profile-title">
+            <h2>Public Profile</h2>
+          </div>
+
+          <!-- Avatar Section -->
+          <div class="avatar-section">
+            <div class="avatar-container">
+              <img src="https://ui-avatars.com/api/?name=U&background=3a86cc&color=fff&rounded=true&size=256"
+                alt="Avatar" class="avatar-img" id="avatarPreview" />
+              <div class="avatar-edit-btn" title="Change Avatar">
+                <i class="fas fa-pencil-alt" style="font-size: 0.75rem;"></i>
+                <input type="file" id="avatarFile" accept="image/*" />
+              </div>
+            </div>
+            <div class="avatar-info">
+              <h3>Profile Picture</h3>
+              <p>PNG, JPEG under 15MB</p>
+            </div>
+          </div>
+
+          <!-- Form Fields -->
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="name">Full Name</label>
+              <input type="text" id="name" placeholder="e.g. Jane Doe" required />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required />
+            </div>
+
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input type="number" id="age" min="1" max="120" placeholder="e.g. 25" required />
+            </div>
+
+            <div class="form-group full">
+              <label for="education">Education / University</label>
+              <input type="text" id="education" placeholder="e.g. B.S. Computer Science, Stanford University"
+                required />
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer Actions -->
+        <div class="form-footer" id="formFooter">
+          <!-- Default State: Edit Button -->
+          <button type="button" id="editBtn" class="btn-save" onclick="startEditing()">Edit Profile</button>
+
+          <!-- Editing State: Cancel & Save (Hidden by default) -->
+          <button type="button" id="cancelBtn" class="btn-cancel" onclick="revertChanges()"
+            style="display: none;">Cancel</button>
+          <button type="submit" id="saveBtn" class="btn-save" style="display: none;">Save changes</button>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- Cropper Modal -->
+    <div id="cropperModal" class="modal-overlay">
+      <div class="modal-content" style="max-width: 500px; padding: 1.5rem; text-align: center;">
+        <h3 class="modal-title" style="margin-bottom: 1rem;">Crop Profile Picture</h3>
+        <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">Position and scale image inside the circle to center your face.</p>
+        <div style="width: 100%; height: 350px; overflow: hidden; margin-bottom: 1.5rem; border-radius: 8px; background: rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center;">
+          <img id="cropperImage" src="" style="max-width: 100%; max-height: 100%; display: block;">
+        </div>
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button type="button" class="btn-cancel" onclick="closeCropperModal()" style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px; cursor: pointer; border: 1px solid #ccc;">Cancel</button>
+          <button type="button" class="btn-save" id="btnCrop" style="padding: 0.75rem 1.5rem; font-weight: 600; border-radius: 8px; cursor: pointer;">Confirm Crop</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Professional Status Modal -->
+    <div id="statusModal" class="modal-overlay">
+      <div class="modal-content">
+        <div id="modalIcon" class="modal-icon">
+          <i class="fas fa-check-circle"></i>
+        </div>
+        <h3 id="modalTitle" class="modal-title">Success!</h3>
+        <p id="modalMessage" class="modal-message">Profile Updated Successfully</p>
+        <button class="modal-btn" onclick="closeModal()">Continue</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Avatar preview logic
+    const avatarFileInput = document.getElementById('avatarFile');
+    const avatarPreview = document.getElementById('avatarPreview');
+    let cropper = null;
+    let croppedImageBase64 = null;
+
+    avatarFileInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const cropperImage = document.getElementById('cropperImage');
+          cropperImage.src = event.target.result;
+          
+          document.getElementById('cropperModal').classList.add('active');
+          
+          if (cropper) cropper.destroy();
+          cropper = new Cropper(cropperImage, {
+            aspectRatio: 1,
+            viewMode: 1,
+            dragMode: 'move',
+            autoCropArea: 1,
+            restore: false,
+            guides: false,
+            center: true,
+            highlight: false,
+            cropBoxMovable: false,
+            cropBoxResizable: false,
+            toggleDragModeOnDblclick: false,
+            minContainerHeight: 350,
+          });
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    window.closeCropperModal = function() {
+      document.getElementById('cropperModal').classList.remove('active');
+      if (cropper) {
+        cropper.destroy();
+        cropper = null;
+      }
+      avatarFileInput.value = ''; // Allow re-selecting same file
+    };
+
+    document.getElementById('btnCrop').addEventListener('click', function() {
+      if (!cropper) return;
+      
+      const canvas = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300,
+      });
+      
+      croppedImageBase64 = canvas.toDataURL('image/jpeg', 0.9);
+      avatarPreview.src = croppedImageBase64;
+      
+      closeCropperModal();
+    });
+
+    // Modal utility
+    window.showModal = function (msg, type = 'success') {
+      const modal = document.getElementById('statusModal');
+      const icon = document.getElementById('modalIcon');
+      const title = document.getElementById('modalTitle');
+      const message = document.getElementById('modalMessage');
+
+      message.textContent = msg;
+
+      if (type === 'error') {
+        icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        icon.style.color = '#ef4444';
+        icon.style.backgroundColor = '#fef2f2';
+        title.textContent = 'Oops!';
+      } else {
+        icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+        icon.style.color = '#10b981';
+        icon.style.backgroundColor = '#ecfdf5';
+        title.textContent = 'Success!';
+      }
+
+      modal.classList.add('active');
+    };
+
+    window.closeModal = function () {
+      document.getElementById('statusModal').classList.remove('active');
+    };
+  </script>
+
+
+
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getDatabase, ref, get, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL }
+      from "https://www.gstatic.com/firebasejs/10.12.2/firebase-storage.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyBoAb7b3DJDMRmNwOSAHTnscM_-JuVnILI",
+      authDomain: "cookdcode-4ce23.firebaseapp.com",
+      databaseURL: "https://cookdcode-4ce23-default-rtdb.firebaseio.com",
+      projectId: "cookdcode-4ce23",
+      storageBucket: "cookdcode-4ce23.appspot.com",
+      messagingSenderId: "419836764054",
+      appId: "1:419836764054:web:ab9968082fb793029f07b7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const storage = getStorage(app);
+
+    /* GET UID FROM LOGIN */
+
+    const uid = localStorage.getItem("userId");
+
+    if (!uid) {
+      showModal("User session expired. Please log in again.", "error");
+      setTimeout(() => { window.location.href = "login.html"; }, 2000);
+    }
+
+    /* USER PATH */
+
+    const userRef = ref(db, "users/" + uid);
+
+
+    let originalData = {};
+
+    /* LOAD EXISTING DATA */
+    get(userRef).then((snapshot) => {
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          originalData = { ...data }; // Store for revert
+
+          updateFieldValues(data);
+
+          // Sync Navbar UI
+          if (data.profileImage) {
+            document.getElementById("userAvatar").src = data.profileImage;
+            document.getElementById("avatarPreview").src = data.profileImage;
+          }
+          if (data.email) document.getElementById("dropdownEmail").textContent = data.email;
+          if (data.tokens !== undefined) document.getElementById("tokenCount").textContent = data.tokens;
+
+          // Check if profile is complete
+          const isComplete = data.fullname && data.phone && data.age && data.education;
+
+        if (!isComplete) {
+          showModal("Please complete your profile details to continue.", "error");
+          setFieldsDisabled(false); // Force edit mode
+          // Hide navigation to other pages
+          document.querySelectorAll('.btn-back, .brand').forEach(el => el.style.pointerEvents = 'none');
+          document.querySelector('.btn-back i').style.opacity = '0.3';
+        } else {
+          setFieldsDisabled(true); // Start in read-only mode if complete
+        }
+      } else {
+        // New user with no record yet
+        setFieldsDisabled(false);
+        document.querySelectorAll('.btn-back, .brand').forEach(el => el.style.pointerEvents = 'none');
+        document.querySelector('.btn-back i').style.opacity = '0.3';
+      }
+    });
+
+    function updateFieldValues(data) {
+      document.getElementById("name").value = data.fullname || data.firstname || "";
+      document.getElementById("phone").value = data.phone || "";
+      document.getElementById("age").value = data.age || "";
+      document.getElementById("education").value = data.education || "";
+      if (data.profileImage) {
+        document.getElementById("avatarPreview").src = data.profileImage;
+      }
+    }
+
+    function setFieldsDisabled(disabled) {
+      const inputs = document.querySelectorAll('.form-grid input');
+      inputs.forEach(input => input.disabled = disabled);
+      document.getElementById('avatarFile').disabled = disabled;
+
+      // Toggle Buttons
+      document.getElementById('editBtn').style.display = disabled ? 'block' : 'none';
+      document.getElementById('cancelBtn').style.display = disabled ? 'none' : 'block';
+      document.getElementById('saveBtn').style.display = disabled ? 'none' : 'block';
+    }
+
+    window.startEditing = function () {
+      setFieldsDisabled(false);
+    };
+
+    window.revertChanges = function () {
+      updateFieldValues(originalData); // Revert to stored snapshot
+      setFieldsDisabled(true);
+    };
+    /* UPDATE PROFILE */
+
+    document.getElementById("profileForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const age = document.getElementById("age").value;
+      const education = document.getElementById("education").value;
+
+      try {
+        const updateData = {
+          fullname: name,
+          phone: phone,
+          age: age,
+          education: education
+        };
+
+        if (croppedImageBase64) {
+          updateData.profileImage = croppedImageBase64;
+        }
+
+        await update(userRef, updateData);
+
+        showModal("Profile Updated Successfully! Navigation unlocked.", "success");
+        originalData = { ...originalData, ...updateData };
+        setFieldsDisabled(true);
+
+        // Unlock navigation
+        document.querySelectorAll('.btn-back, .brand').forEach(el => el.style.pointerEvents = 'auto');
+        document.querySelector('.btn-back i').style.opacity = '1';
+        
+        croppedImageBase64 = null;
+      } catch (err) {
+        console.error(err);
+        showModal("Update failed. Please check your connection.", "error");
+      }
+    });
+
+
+
+    // Mobile Toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        document.getElementById('sidebar').classList.toggle('mobile-active');
+      });
+    }
+
+    window.logoutUser = () => {
+      localStorage.clear();
+      window.location.href = "login.html";
+    };
+  </script>
+    </div>
+  </div>
+</body>
+
+</html>

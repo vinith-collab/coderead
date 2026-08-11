@@ -1,0 +1,108 @@
+/* Custom styles for components that need specific overrides or non-tailwind behaviors */
+.hidden {
+    display: none;
+}
+
+.textarea-container {
+    animation: slideDown 0.3s ease-out;
+}
+
+[id^="section-"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.collapsible-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    overflow: hidden;
+}
+
+.collapsible-content.open {
+    grid-template-rows: 1fr;
+    border-top: 1px solid rgb(249 250 251);
+}
+
+.collapsible-inner {
+    min-height: 0;
+    opacity: 0;
+    transform: translateY(-15px);
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.collapsible-content.open .collapsible-inner {
+    opacity: 1;
+    transform: translateY(0);
+    transition-delay: 0.1s;
+}
+
+[id^="section-"] i.fas {
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.4s ease;
+}
+
+.is-open i.fas {
+    transform: scale(1.2) rotate(12deg);
+}
+
+#aiFeedbackCard {
+    transition: height 0.7s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.5s ease, 
+                transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 2rem 2rem 0 0;
+}
+
+.feedback-closed {
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.feedback-open {
+    transform: translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#resizer.is-resizing {
+    background-color: rgba(58, 134, 204, 0.05);
+}
+
+#resizer.is-resizing .resizer-handle {
+    background-color: #3a86cc;
+    width: 48px;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.text-area {
+    resize: vertical;
+}
+
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.save-pop {
+    animation: pop 0.3s ease-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(100, 116, 139, 0.35);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(71, 85, 105, 0.6);
+}

@@ -1,0 +1,400 @@
+:root {
+  --primary: rgb(58, 134, 204);
+  --primary-hover: rgb(44, 107, 166);
+  --primary-light: rgba(58, 134, 204, 0.1);
+  --success: #10b981;
+  --warning: #f59e0b;
+  --bg-color: #f0f6fc;
+  --surface: #ffffff;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --border: rgba(58, 134, 204, 0.15);
+  --ring-bg: rgba(58, 134, 204, 0.1);
+  --shadow-sm: 0 1px 3px rgba(58, 134, 204, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(58, 134, 204, 0.1), 0 2px 4px -1px rgba(58, 134, 204, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(58, 134, 204, 0.1), 0 4px 6px -2px rgba(58, 134, 204, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+/* Navbar */
+.navbar {
+  background: rgba(58, 134, 204, 0.85);
+  /* Glossy Blue */
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  text-decoration: none;
+}
+
+.brand img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-color: #ffffff;
+  border: 4px solid #ffffff;
+  box-shadow:
+    0 10px 15px -3px rgba(58, 134, 204, 0.3),
+    0 4px 6px -4px rgba(58, 134, 204, 0.3),
+    inset 0 -3px 6px rgba(0, 0, 0, 0.1),
+    inset 0 3px 6px rgba(255, 255, 255, 1);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.brand img:hover {
+  transform: translateY(-4px) scale(1.05);
+}
+
+.brand span {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+}
+
+/* Back Button */
+.btn-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 1.1rem;
+}
+
+.btn-back:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-color: #ffffff;
+  transform: translateX(-3px);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
+}
+
+.nav-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+/* Profile Menu Inherits from dashboard.css */
+.profile-menu {
+  position: relative;
+}
+
+/* Nav Title */
+.nav-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.75rem;
+  font-weight: 800;
+  background: #ffffff;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.025em;
+  margin: 0;
+}
+
+/* Main Container */
+.container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 3rem 4vw 4rem;
+  width: 100%;
+  flex: 1;
+}
+
+/* Carousel Section */
+.carousel-section {
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.section-header {
+  margin-bottom: 3rem;
+  padding: 0;
+  text-align: left;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #3a86cc;
+  /* Official Brand Blue */
+  letter-spacing: -0.025em;
+  margin-bottom: 0.5rem;
+  line-height: 1.1;
+}
+
+.category-section {
+  margin-bottom: 4rem;
+}
+
+.category-title {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
+  width: 100%;
+}
+
+.phase-tag {
+  background: rgba(16, 185, 129, 0.1);
+  /* Official Success Green Light */
+  color: #10b981;
+  /* Official Success Green */
+  padding: 0.5rem 1.25rem;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  white-space: nowrap;
+}
+
+.category-name {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #10b981;
+  /* Unmistakable Mastery Green */
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+
+/* Vertical bar removed for cleaner alignment */
+
+.cards-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+
+
+
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1rem 0;
+}
+
+/* Scroll Animations */
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card Design */
+.card {
+  background: var(--surface);
+
+  border-radius: 1.5rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  position: relative;
+  overflow: hidden;
+  min-height: 380px;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--success);
+  transition: background 0.4s ease;
+}
+
+.card:hover::before {
+  background: var(--success);
+}
+
+.card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 25px 30px -5px rgba(72, 187, 120, 0.15), 0 15px 15px -5px rgba(72, 187, 120, 0.1);
+  border-color: var(--success);
+  border: 1px solid var(--success);
+}
+
+.card-badge {
+  align-self: flex-start;
+  background: rgba(16, 185, 129, 0.1);
+  /* Official Success Light */
+  color: #10b981;
+  /* Official Green */
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.4rem 0.85rem;
+  border-radius: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.card .problem-span {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-top: 0;
+  margin-bottom: auto;
+  text-align: left;
+  width: 100%;
+  line-height: 1.4;
+  display: block;
+}
+
+/* SVG Circular Progress */
+.progress-container {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.progress-svg {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  filter: drop-shadow(0 4px 6px rgba(255, 12, 12, 0.05));
+}
+
+.progress-bg {
+  fill: none;
+  stroke: var(--ring-bg);
+  stroke-width: 8;
+}
+
+.progress-bar {
+
+  fill: none;
+  stroke: var(--success);
+  stroke-width: 8;
+  stroke-linecap: round;
+  stroke-dasharray: 251.2;
+  /* 2 * pi * r (r=40) */
+  stroke-dashoffset: 251.2;
+  /* Start empty */
+  transition: stroke-dashoffset 1.5s cubic-bezier(0.34, 1.56, 0.64, 1), stroke 0.5s ease;
+}
+
+.progress-text {
+  position: absolute;
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--success);
+  transition: all 0.5s ease;
+}
+
+.progress-text .percent {
+  font-size: 1.125rem;
+  color: var(--success);
+  margin-left: 2px;
+  font-weight: 600;
+}
+
+
+/* Button */
+.btn {
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background-color: #ffffff;
+  color: var(--success);
+  border: 2px solid var(--success);
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(58, 134, 204, 0.1);
+}
+
+.btn:hover {
+  background-color: var(--success);
+  border-color: var(--success);
+  color: #ffffff;
+  box-shadow: 0 8px 16px rgba(58, 134, 204, 0.3);
+  transform: translateY(-2px);
+}
+
+.btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(58, 134, 204, 0.2);
+}
+
+
+.card.ongoing .btn:hover {
+  background-color: var(--warning);
+  border-color: var(--warning);
+  color: var(--surface);
+  box-shadow: 0 8px 16px rgba(245, 158, 11, 0.25);
+  transform: translateY(-2px);
+}
+
+/* Responsive Breakpoints Handled by dashboard.css */

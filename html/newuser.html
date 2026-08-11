@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CookDCode Progress</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+  <link rel="stylesheet" href="../css/newuser.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+  <style>
+    /* Instant Load Optimization */
+    body {
+      opacity: 0;
+      transition: opacity 0.25s ease-in;
+    }
+
+    body.loaded {
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="dashboard-layout">
+    <!-- Sidebar (Preview) -->
+    <aside class="sidebar" id="sidebar">
+      <button class="sidebar-close" id="sidebarClose" aria-label="Close Menu">
+        <i class="fas fa-times"></i>
+      </button>
+      <nav class="sidebar-nav">
+        <a href="newuser.html" class="sidebar-link active">
+          <i class="fas fa-th-large"></i>
+          <span>Dashboard</span>
+        </a>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="showLoginRequired()">
+          <i class="fas fa-spinner fa-spin-hover"></i>
+          <span>Ongoing Programs</span>
+        </a>
+        <a href="javascript:void(0)" class="sidebar-link" onclick="showLoginRequired()">
+          <i class="fas fa-check-circle"></i>
+          <span>Completed Programs</span>
+        </a>
+        
+
+      </nav>
+      
+
+    </aside>
+
+    <div class="main-content">
+      <nav class="navbar">
+        <div class="nav-left">
+          <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu" style="display: none;">
+            <i class="fas fa-bars"></i>
+          </button>
+          <a href="newuser.html" class="brand">
+            <img src="../Images/logo.png" alt="cookDcode Logo" class="logo" />
+            <span>cookDcode</span>
+          </a>
+        </div>
+
+        <div class="navbar-right">
+          <div class="auth-buttons">
+            <a href="login.html" class="btn-text" style="color: white; text-decoration: none; font-weight: 700; margin-right: 1.5rem;">Log In</a>
+            <a href="signup.html" class="btn-auth" style="background: white; color: #3a86cc; padding: 0.7rem 1.5rem; border-radius: 0.8rem; text-decoration: none; font-weight: 800; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">Sign Up</a>
+          </div>
+        </div>
+      </nav>
+
+    <main class="container">
+
+        <!-- ROW 1 -->
+        <section class="carousel-section">
+            <div class="section-header">
+                <span class="phase-tag">Phase 1</span>
+                <span class="category-name">Fundamentals</span>
+            </div>
+            <div class="cards-grid">
+                <!-- Card 1 -->
+                <div class="card locked" data-topic="armstrong">
+                    <span class="card-badge">Problem 1</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card locked" data-topic="peterson">
+                    <span class="card-badge">Problem 2</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card locked" data-topic="prime">
+                    <span class="card-badge">Problem 3</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card locked" data-topic="lcm">
+                    <span class="card-badge">Problem 4</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="card locked" data-topic="string">
+                    <span class="card-badge">Problem 5</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="card locked" data-topic="sorting1">
+                    <span class="card-badge">Problem 6</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="card locked" data-topic="sorting2">
+                    <span class="card-badge">Problem 7</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 8 -->
+                <div class="card locked" data-topic="sorting3">
+                    <span class="card-badge">Problem 8</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 9 -->
+                <div class="card locked" data-topic="searching1">
+                    <span class="card-badge">Problem 9</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 10 -->
+                <div class="card locked" data-topic="searching2">
+                    <span class="card-badge">Problem 10</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ROW 2 -->
+        <section class="carousel-section">
+            <div class="section-header">
+                <span class="phase-tag">Phase 2</span>
+                <span class="category-name">Advanced Data Structures</span>
+            </div>
+            <div class="cards-grid">
+                <!-- Card 11 -->
+                <div class="card locked" data-topic="arrays">
+                    <span class="card-badge">Problem 11</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 12 -->
+                <div class="card locked" data-topic="linkedlist">
+                    <span class="card-badge">Problem 12</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 13 -->
+                <div class="card locked" data-topic="stacks">
+                    <span class="card-badge">Problem 13</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 14 -->
+                <div class="card locked" data-topic="queues">
+                    <span class="card-badge">Problem 14</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 15 -->
+                <div class="card locked" data-topic="trees">
+                    <span class="card-badge">Problem 15</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 16 -->
+                <div class="card locked" data-topic="graphs">
+                    <span class="card-badge">Problem 16</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 17 -->
+                <div class="card locked" data-topic="dp">
+                    <span class="card-badge">Problem 17</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 18 -->
+                <div class="card locked" data-topic="backtracking">
+                    <span class="card-badge">Problem 18</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 19 -->
+                <div class="card locked" data-topic="tries">
+                    <span class="card-badge">Problem 19</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+
+                <!-- Card 20 -->
+                <div class="card locked" data-topic="heaps">
+                    <span class="card-badge">Problem 20</span>
+                    <div class="progress-container loading">
+                        <svg class="progress-svg" viewBox="0 0 100 100">
+                            <circle class="progress-bg" cx="50" cy="50" r="40"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="40"></circle>
+                        </svg>
+                        <div class="progress-text"><span class="value">0</span><span class="percent">%</span></div>
+                    </div>
+                    <a href="javascript:void(0)" onclick="showLoginRequired()" class="btn">Enter Challenge</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    </div>
+  </div>
+
+  <script>
+    // Auth Check: Redirect to Dashboard if already logged in
+    const uid = localStorage.getItem("userId") || localStorage.getItem("uid");
+    if (uid) {
+      window.location.href = "ctc.html";
+    }
+
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+
+    // Modal Utility
+    window.showModal = function(msg, type = 'success') {
+      const modal = document.getElementById('statusModal');
+      const icon = document.getElementById('modalIcon');
+      const title = document.getElementById('modalTitle');
+      const message = document.getElementById('modalMessage');
+      
+      message.textContent = msg;
+      
+      if(type === 'error' || type === 'warning') {
+        icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        icon.style.color = '#ef4444';
+        icon.style.backgroundColor = '#fef2f2';
+        title.textContent = 'Action Required';
+      } else {
+        icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+        icon.style.color = '#10b981';
+        icon.style.backgroundColor = '#ecfdf5';
+        title.textContent = 'Success!';
+      }
+      modal.classList.add('active');
+    };
+
+    // Mobile Toggle
+    const mobileToggle = document.getElementById('mobileToggle');
+    const sidebarClose = document.getElementById('sidebarClose');
+    const sidebar = document.getElementById('sidebar');
+
+    if (mobileToggle) {
+      mobileToggle.addEventListener('click', () => {
+        sidebar.classList.add('mobile-active');
+      });
+    }
+
+    if (sidebarClose) {
+      sidebarClose.addEventListener('click', () => {
+        sidebar.classList.remove('mobile-active');
+      });
+    }
+
+    // Login Required Popup
+    window.showLoginRequired = function() {
+        const modal = document.getElementById('statusModal');
+        const icon = document.getElementById('modalIcon');
+        const title = document.getElementById('modalTitle');
+        const message = document.getElementById('modalMessage');
+        const btn = modal.querySelector('.modal-btn');
+        const secondaryBtn = document.getElementById('modalBtnSecondary');
+        
+        icon.innerHTML = '<i class="fas fa-lock"></i>';
+        icon.style.color = '#3a86cc';
+        icon.style.backgroundColor = '#eff6ff';
+        
+        title.textContent = 'Account Required';
+        message.textContent = 'To attempt this challenge, you need to be logged in. Join CookDCode to track your progress and solve problems!';
+        
+        btn.textContent = 'Click here to Login';
+        btn.onclick = () => { window.location.href = "login.html"; };
+        
+        if (secondaryBtn) secondaryBtn.classList.remove('hidden');
+        
+        modal.classList.add('active');
+    };
+
+    window.closeModal = function() {
+        const modal = document.getElementById('statusModal');
+        const secondaryBtn = document.getElementById('modalBtnSecondary');
+        modal.classList.remove('active');
+        if (secondaryBtn) secondaryBtn.classList.add('hidden');
+    };
+  </script>
+
+  <!-- Professional Status Modal -->
+  <div id="statusModal" class="modal-overlay">
+    <div class="modal-content">
+      <div id="modalIcon" class="modal-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3 id="modalTitle" class="modal-title">Success!</h3>
+      <p id="modalMessage" class="modal-message">Your progress has been saved.</p>
+      <div class="modal-buttons">
+        <button class="modal-btn" onclick="closeModal()">Continue</button>
+        <button id="modalBtnSecondary" class="modal-btn modal-btn-secondary hidden" onclick="closeModal()">Maybe Later</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="script.js"></script>
+</body>
+
+</html>

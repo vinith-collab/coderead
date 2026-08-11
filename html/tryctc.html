@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CookDCode - Challenge Workspace</title>
+    <script>
+      window.addEventListener("error", function (e) {
+        if (e.message === "Script error." || (typeof e.message === 'string' && e.message.indexOf("Script error") !== -1)) {
+          e.stopImmediatePropagation();
+          e.preventDefault();
+          return true;
+        }
+      }, true);
+    </script>
+    <link rel="stylesheet" href="../css/tailwind.css">
+    <link rel="stylesheet" href="../css/workspace-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#f0f4f8] font-sans m-0 p-0 text-[#1a202c]">
+    <div class="dashboard-layout">
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Top Navbar -->
+            <nav class="navbar">
+              <div class="nav-left">
+                <a href="ctc.html" class="brand">
+                  <img src="../Images/logo.png" alt="cookDcode Logo" class="logo" />
+                  <span>cookDcode</span>
+                </a>
+              </div>
+              <div class="navbar-right">
+                <button id="saveBtn" class="nav-save-btn" title="Save Progress" style="display:none">
+                   <i class="fas fa-cloud-upload-alt"></i>
+                   <span class="hidden sm:inline">Save</span>
+                </button>
+                <!-- Token Display -->
+                <div id="tokenDisplay" class="token-display" title="Your available tokens">
+                  <div class="token-icon">
+                    <i class="fas fa-coins"></i>
+                  </div>
+                  <span class="token-label">Tokens:</span>
+                  <span class="token-count" id="tokenCount">10</span>
+                </div>
+              </div>
+            </nav>
+
+            <main id="mainContent" class="p-4 md:p-6 grid grid-cols-1 xl:grid-cols-[450px_1fr] gap-6 items-start transition-opacity duration-500 w-full max-w-full opacity-0" style="margin-top: 96px;">
+        <!-- Left Column -->
+        <div class="flex flex-col h-auto xl:h-[calc(100vh-120px)] xl:sticky xl:top-24 gap-0 overflow-hidden rounded-2xl border border-gray-100 shadow-sm bg-white">
+            <!-- Challenge Card (Top) -->
+            <div id="challengeCard" class="flex-1 min-h-[150px] xl:min-h-[200px] overflow-y-auto bg-white">
+                <div class="p-6 md:p-8 pb-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 text-[#3a86cc] rounded-full text-[10px] font-bold uppercase tracking-wider mb-4">
+                        <span class="w-1.5 h-1.5 bg-[#3a86cc] rounded-full"></span>
+                        <span id="challengePhaseBadge">Phase 1</span> • <span id="challengeProblemBadge">Problem 1</span>
+                    </div>
+                    <h1 id="problemTitle" class="text-2xl md:text-3xl xl:text-4xl font-extrabold text-[#1a202c] leading-tight mb-4 md:mb-6">Write a program to find if a number is Odd or Even.</h1>
+                </div>
+                <div class="border-t border-gray-50 p-6 md:p-8 pt-6">
+                    <div class="flex items-center gap-2 text-[#3a86cc] font-bold text-sm mb-4">
+                        <i class="fas fa-book-open"></i> Concept
+                    </div>
+                    <div class="text-lg text-gray-700 space-y-4">
+                        <p class="font-semibold text-gray-800">Problem Definition:</p>
+                        <div id="problemDescription" class="leading-relaxed space-y-3">
+                            <p>Write a program to detect if a given number is Odd or Even using logical operators.</p>
+                            <p>The program should take an integer input and print 'even' or 'odd'.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resizer -->
+            <div id="resizer" class="h-6 bg-transparent hover:bg-gray-50/50 cursor-row-resize flex items-center justify-center group hidden transition-all duration-300 relative z-20">
+                <div class="resizer-handle w-10 h-1 bg-gray-300 rounded-full group-hover:bg-[#3a86cc] transition-all duration-300"></div>
+                <!-- Subtle line indicators -->
+                <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-[1px] bg-gray-100 -z-10 w-full"></div>
+            </div>
+
+            <!-- AI Feedback Card (Bottom) -->
+            <div id="aiFeedbackCard" class="h-0 min-h-0 overflow-hidden bg-white border-t border-gray-100 hidden rounded-t-[2rem] md:rounded-t-[2.5rem] shadow-[0_-8px_30px_rgba(0,0,0,0.08)] feedback-closed">
+                <div class="bg-gradient-to-r from-[#3a86cc] to-[#2d74b3] px-6 md:px-8 py-4 md:py-5 flex justify-between items-center text-white sticky top-0 z-10">
+                    <div class="flex items-center gap-2 md:gap-3 font-bold text-xs md:text-sm tracking-wider">
+                        <div class="w-7 h-7 md:w-8 md:h-8 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                            <i class="fas fa-wand-magic-sparkles text-[10px] md:text-xs"></i>
+                        </div>
+                        AI ASSISTANT
+                    </div>
+                    <div class="flex items-center gap-2 md:gap-3">
+                        <button id="btnPrevHint" onclick="navigateHint(-1)" class="w-7 h-7 md:w-8 md:h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-all hidden" title="Previous Hint"><i class="fas fa-chevron-left text-xs md:text-sm"></i></button>
+                        <span id="hintCounter" class="text-xs font-medium hidden tracking-widest"></span>
+                        <button id="btnNextHint" onclick="navigateHint(1)" class="w-7 h-7 md:w-8 md:h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-all hidden" title="Next Hint"><i class="fas fa-chevron-right text-xs md:text-sm"></i></button>
+                        <div class="w-px h-4 bg-white/20 mx-1 md:mx-2 hidden" id="hintDivider"></div>
+                        <button onclick="clearFeedback()" class="w-7 h-7 md:w-8 md:h-8 rounded-full hover:bg-white/10 flex items-center justify-center transition-all active:scale-90" title="Close"><i class="fas fa-times text-xs md:text-sm"></i></button>
+                    </div>
+                </div>
+                <div class="p-6 md:p-10 overflow-y-auto h-[calc(100%-64px)] md:h-[calc(100%-72px)] bg-gradient-to-b from-white to-gray-50/30">
+                    <div id="aiFeedbackLoading" class="hidden flex flex-col items-center justify-center py-12 gap-5">
+                        <div class="relative">
+                            <div class="w-12 h-12 border-4 border-blue-50 border-t-[#3a86cc] rounded-full animate-spin"></div>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <i class="fas fa-sparkles text-[#3a86cc] text-[10px] animate-pulse"></i>
+                            </div>
+                        </div>
+                        <p class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em] animate-pulse">Analyzing your logic</p>
+                    </div>
+                    <div id="aiFeedbackContent" class="text-[15px] text-gray-600 leading-relaxed space-y-5 font-medium">
+                        Select a section and click 'Help' to get AI guidance tailored to your work.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-4">
+            <!-- Logic Section -->
+            <div id="section-logic" class="bg-white rounded-xl shadow-sm border border-gray-100 transition-all duration-300">
+                <div class="p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3 md:gap-4">
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blue-50 rounded-lg flex items-center justify-center text-[#3a86cc]">
+                            <i class="fas fa-brain text-sm md:text-base"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg md:text-xl text-[#1a202c]">Logic</h3>
+                            <p class="text-[10px] md:text-xs text-gray-500">Complete the logic step</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 md:gap-6 w-full sm:w-auto justify-start sm:justify-end">
+                        <span id="label-logic" class="text-emerald-600 font-bold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 hidden items-center gap-2 shadow-sm animate-bounce-subtle"><i class="fas fa-check-circle"></i> Completed</span>
+                        <button onclick="getHelp('logic')" class="btn-help">
+                            <i class="fas fa-lightbulb"></i> Help
+                        </button>
+                        <button onclick="toggleSection('logic')" id="btn-logic" class="btn-write">
+                            <i class="fas fa-pen"></i> Write
+                        </button>
+                    </div>
+                </div>
+                <div id="content-logic" class="collapsible-content bg-gray-50/30">
+                    <div class="collapsible-inner">
+                        <div class="p-4 md:p-6">
+                            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-inner">
+                                <div class="px-4 py-2 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">logic.txt</span>
+                                    <button onclick="clearSection('logic')" class="btn-clear" title="Clear All">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                                <textarea id="logicInput" class="w-full h-64 p-6 text-lg text-gray-700 focus:outline-none resize-none bg-transparent" placeholder="Write your logic here..."></textarea>
+                            </div>
+                            <div class="flex justify-end mt-4">
+                                <button onclick="checkInput('logic')" class="px-6 py-2.5 bg-[#3a86cc] text-white rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-[#2c6ba6] transition-colors">
+                                    <i class="fas fa-check text-[10px]"></i> Check Logic
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recipe Section -->
+            <div id="section-recipe" class="bg-white rounded-xl shadow-sm border border-gray-100 transition-all duration-300">
+                <div class="p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 section-lock-container" id="container-recipe" data-locked="true">
+                    <div class="flex items-center gap-3 md:gap-4 opacity-40 transition-all duration-500" id="header-recipe">
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blue-50 rounded-lg flex items-center justify-center text-[#3a86cc]">
+                            <i class="fas fa-list-ol text-sm md:text-base"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg md:text-xl text-[#1a202c]">Recipe</h3>
+                            <p class="text-[10px] md:text-xs text-gray-500">Complete the recipe step</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 md:gap-6 w-full sm:w-auto justify-start sm:justify-end">
+                        <span id="label-recipe" class="text-emerald-600 font-bold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 hidden items-center gap-2 shadow-sm animate-bounce-subtle"><i class="fas fa-check-circle"></i> Completed</span>
+                        <div id="lock-recipe" class="flex items-center gap-2 text-gray-400 font-bold text-xs md:text-sm bg-gray-50 px-4 py-2 rounded-full border border-gray-100"><i class="fas fa-lock"></i> Locked</div>
+                        <div id="controls-recipe" class="hidden flex flex-wrap items-center gap-2 md:gap-6">
+                            <button onclick="getHelp('recipe')" class="btn-help">
+                                <i class="fas fa-lightbulb"></i> Help
+                            </button>
+                            <button onclick="toggleSection('recipe')" id="btn-recipe" class="btn-write">
+                                <i class="fas fa-pen"></i> Write
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-recipe" class="collapsible-content bg-gray-50/30">
+                    <div class="collapsible-inner">
+                        <div class="p-4 md:p-6">
+                            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-inner">
+                                <div class="px-4 py-2 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">recipe.txt</span>
+                                    <button onclick="clearSection('recipe')" class="btn-clear" title="Clear All">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                                <textarea id="recipeInput" class="w-full h-64 p-6 text-lg text-gray-700 focus:outline-none resize-none bg-transparent" placeholder="Write your recipe here..."></textarea>
+                            </div>
+                            <div class="flex justify-end mt-4">
+                                <button onclick="checkInput('recipe')" class="px-6 py-2.5 bg-[#3a86cc] text-white rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-[#2c6ba6] transition-colors">
+                                    <i class="fas fa-check text-[10px]"></i> Check Recipe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ingredients Section -->
+            <div id="section-ingredients" class="bg-white rounded-xl shadow-sm border border-gray-100 transition-all duration-300">
+                <div class="p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 section-lock-container" id="container-ingredients" data-locked="true">
+                    <div class="flex items-center gap-3 md:gap-4 opacity-40 transition-all duration-500" id="header-ingredients">
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blue-50 rounded-lg flex items-center justify-center text-[#3a86cc]">
+                            <i class="fas fa-cubes text-sm md:text-base"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg md:text-xl text-[#1a202c]">Ingredients</h3>
+                            <p class="text-[10px] md:text-xs text-gray-500">Complete the ingredients step</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 md:gap-6 w-full sm:w-auto justify-start sm:justify-end">
+                        <span id="label-ingredients" class="text-emerald-600 font-bold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 hidden items-center gap-2 shadow-sm animate-bounce-subtle"><i class="fas fa-check-circle"></i> Completed</span>
+                        <div id="lock-ingredients" class="flex items-center gap-2 text-gray-400 font-bold text-xs md:text-sm bg-gray-50 px-4 py-2 rounded-full border border-gray-100"><i class="fas fa-lock"></i> Locked</div>
+                        <div id="controls-ingredients" class="hidden flex flex-wrap items-center gap-2 md:gap-6">
+                            <button onclick="getHelp('ingredients')" class="btn-help">
+                                <i class="fas fa-lightbulb"></i> Help
+                            </button>
+                            <button onclick="toggleSection('ingredients')" id="btn-ingredients" class="btn-write">
+                                <i class="fas fa-pen"></i> Write
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-ingredients" class="collapsible-content bg-gray-50/30">
+                    <div class="collapsible-inner">
+                        <div class="p-4 md:p-6">
+                            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-inner">
+                                <div class="px-4 py-2 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">ingredients.txt</span>
+                                    <button onclick="clearSection('ingredients')" class="btn-clear" title="Clear All">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                                <textarea id="ingredientsInput" class="w-full h-64 p-6 text-lg text-gray-700 focus:outline-none resize-none bg-transparent" placeholder="Write your ingredients here..."></textarea>
+                            </div>
+                            <div class="flex justify-end mt-4">
+                                <button onclick="checkInput('ingredients')" class="px-6 py-2.5 bg-[#3a86cc] text-white rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-[#2c6ba6] transition-colors">
+                                    <i class="fas fa-check text-[10px]"></i> Check Ingredients
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Taste The Sample Section -->
+            <div id="section-samplecode" class="bg-white rounded-xl shadow-sm border border-gray-100 transition-all duration-300">
+                <div class="p-4 md:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 section-lock-container" id="container-samplecode" data-locked="true">
+                    <div class="flex items-center gap-3 md:gap-4 opacity-40 transition-all duration-500" id="header-samplecode">
+                        <div class="w-8 h-8 md:w-10 md:h-10 bg-blue-50 rounded-lg flex items-center justify-center text-[#3a86cc]">
+                            <i class="fas fa-code text-sm md:text-base"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg md:text-xl text-[#1a202c]">Taste the Sample</h3>
+                            <p class="text-[10px] md:text-xs text-gray-500">Complete the sample code step</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 md:gap-6 w-full sm:w-auto justify-start sm:justify-end">
+                        <span id="label-samplecode" class="text-emerald-600 font-bold text-xs md:text-sm bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-100 hidden items-center gap-2 shadow-sm animate-bounce-subtle"><i class="fas fa-check-circle"></i> Completed</span>
+                        <div id="lock-samplecode" class="flex items-center gap-2 text-gray-400 font-bold text-xs md:text-sm bg-gray-50 px-4 py-2 rounded-full border border-gray-100"><i class="fas fa-lock"></i> Locked</div>
+                        <div id="controls-samplecode" class="hidden flex flex-wrap items-center gap-2 md:gap-6">
+                            <button onclick="getHelp('samplecode')" class="btn-help">
+                                <i class="fas fa-lightbulb"></i> Help
+                            </button>
+                            <button onclick="toggleSection('samplecode')" id="btn-samplecode" class="btn-write">
+                                <i class="fas fa-pen"></i> Write
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="content-samplecode" class="collapsible-content bg-gray-50/30">
+                    <div class="collapsible-inner">
+                        <div class="p-4 md:p-6">
+                            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden shadow-inner">
+                                <div class="px-4 py-2 bg-gray-50 border-b border-gray-200 flex justify-between items-center">
+                                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">main.py</span>
+                                    <button onclick="clearSection('sample')" class="btn-clear" title="Clear All">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                                <textarea id="sampleInput" class="w-full h-64 p-6 text-lg text-gray-700 font-mono focus:outline-none resize-none bg-transparent" placeholder="Write your code here..."></textarea>
+                            </div>
+                            <div class="flex justify-end mt-4">
+                              <button onclick="checkCode()" class="px-6 py-2.5 bg-[#3a86cc] text-white rounded-lg text-xs font-bold flex items-center gap-2 hover:bg-[#2c6ba6] transition-colors">
+                                    <i class="fas fa-check text-[10px]"></i> Check Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    </div>
+  </div>
+
+    <!-- Toast & Modals -->
+    <div id="toast" class="toast"></div>
+    <div id="statusModal" class="modal-overlay">
+      <div class="modal-content">
+        <div id="modalIcon" class="modal-icon"><i class="fas fa-check-circle"></i></div>
+        <h3 id="modalTitle" class="modal-title">Success!</h3>
+        <p id="modalMessage" class="modal-message">Progress saved.</p>
+        <button class="modal-btn" onclick="closeModal()">Continue</button>
+      </div>
+  
+  <script>
+    function showToast(msg, type = "success") {
+        const toast = document.getElementById("toast");
+        if (!toast) return;
+        toast.textContent = msg;
+        toast.className = `toast show ${type}`;
+        setTimeout(() => {
+            toast.classList.remove("show");
+        }, 3000);
+    }
+
+    window.showModal = function(msg, type = 'success') {
+      const modal = document.getElementById('statusModal');
+      const icon = document.getElementById('modalIcon');
+      const title = document.getElementById('modalTitle');
+      const message = document.getElementById('modalMessage');
+      if (!modal || !message) return;
+
+      message.textContent = msg;
+
+      if (type === 'error' || type === 'warning') {
+        if(icon) {
+          icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+          icon.style.color = '#ef4444';
+          icon.style.backgroundColor = '#fef2f2';
+        }
+        if(title) title.textContent = 'Action Required';
+      } else {
+        if(icon) {
+          icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+          icon.style.color = '#10b981';
+          icon.style.backgroundColor = '#ecfdf5';
+        }
+        if(title) title.textContent = 'Success!';
+      }
+
+      modal.classList.add('active');
+    };
+
+    window.closeModal = function() {
+      const modal = document.getElementById('statusModal');
+      if (modal) modal.classList.remove('active');
+    };
+
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const problemID = params.get("problemID") || "problem01";
+        const category = params.get("category") || "fundamentals";
+        const API_BASE = "http://localhost:3000";
+
+        let tokens = 10;
+
+        window.useToken = function(actionType) {
+            if (tokens <= 0) {
+                if (actionType === "check") return true;
+                showToast("❌ No tokens left!", "warning");
+                return false;
+            }
+            tokens--;
+            const tokenCounter = document.getElementById("tokenCount");
+            if (tokenCounter) tokenCounter.innerText = tokens;
+            return true;
+        }
+
+        window.unlockSection = function(section) {
+            const container = document.getElementById(`container-${section}`);
+            const lock = document.getElementById(`lock-${section}`);
+            const controls = document.getElementById(`controls-${section}`);
+            const header = document.getElementById(`header-${section}`);
+            
+            if (container) {
+                container.setAttribute('data-locked', 'false');
+                if (lock) lock.classList.add('hidden');
+                if (controls) controls.classList.remove('hidden');
+                if (header) header.classList.remove('opacity-40');
+            }
+        };
+
+        window.markComplete = function(section) {
+            const label = document.getElementById(`label-${section}`);
+            const lock = document.getElementById(`lock-${section}`);
+            const header = document.getElementById(`header-${section}`);
+            const controls = document.getElementById(`controls-${section}`);
+            
+            if (label) label.classList.remove('hidden');
+            if (lock) lock.classList.add('hidden');
+            if (header) header.classList.remove('opacity-40');
+            if (controls) controls.classList.remove('hidden');
+            
+            const nextMap = {
+                'logic': 'recipe',
+                'recipe': 'ingredients',
+                'ingredients': 'samplecode'
+            };
+            
+            const next = nextMap[section];
+            if (next) {
+                window.unlockSection(next);
+                setTimeout(() => {
+                    try {
+                        window.toggleSection(next);
+                        const el = document.getElementById(`section-${next}`);
+                        if(el && el.scrollIntoView) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    } catch (e) {}
+                }, 150);
+            }
+        };
+
+        window.toggleSection = function(section) {
+            const container = document.getElementById(`container-${section}`);
+            if (container && container.getAttribute('data-locked') === 'true') {
+                showToast("Complete the previous section first!", "warning");
+                return;
+            }
+
+            const content = document.getElementById(`content-${section}`);
+            const btn = document.getElementById(`btn-${section}`);
+            
+            if (!content || !btn) return;
+            
+            const isOpen = content.classList.toggle('open');
+            if (isOpen) {
+                btn.innerHTML = `<i class="fas fa-times"></i> Close`;
+            } else {
+                btn.innerHTML = `<i class="fas fa-pen"></i> Write`;
+            }
+        };
+
+        window.clearSection = function(section) {
+            const inputId = (section === 'samplecode' || section === 'sample') ? 'sampleInput' : section + 'Input';
+            const el = document.getElementById(inputId);
+            if (el) {
+                el.value = "";
+                el.focus();
+                showToast(`Cleared ${section} section`, "info");
+            }
+        };
+
+        window.hintLevels = { logic: 1, recipe: 1, ingredients: 1, samplecode: 1 };
+        window.hintHistory = [];
+        window.currentHintIndex = -1;
+
+        window.updateHintNavigation = function() {
+            const btnPrev = document.getElementById('btnPrevHint');
+            const btnNext = document.getElementById('btnNextHint');
+            const counter = document.getElementById('hintCounter');
+            const divider = document.getElementById('hintDivider');
+            
+            if (window.hintHistory.length > 1) {
+                btnPrev.classList.remove('hidden');
+                btnNext.classList.remove('hidden');
+                counter.classList.remove('hidden');
+                divider.classList.remove('hidden');
+                
+                counter.innerText = `${window.currentHintIndex + 1} / ${window.hintHistory.length}`;
+                
+                btnPrev.style.opacity = window.currentHintIndex > 0 ? "1" : "0.5";
+                btnPrev.style.pointerEvents = window.currentHintIndex > 0 ? "auto" : "none";
+                
+                btnNext.style.opacity = window.currentHintIndex < window.hintHistory.length - 1 ? "1" : "0.5";
+                btnNext.style.pointerEvents = window.currentHintIndex < window.hintHistory.length - 1 ? "auto" : "none";
+            } else {
+                btnPrev.classList.add('hidden');
+                btnNext.classList.add('hidden');
+                counter.classList.add('hidden');
+                divider.classList.add('hidden');
+            }
+        };
+
+        window.navigateHint = function(direction) {
+            const newIndex = window.currentHintIndex + direction;
+            if (newIndex >= 0 && newIndex < window.hintHistory.length) {
+                window.currentHintIndex = newIndex;
+                const hintData = window.hintHistory[window.currentHintIndex];
+                const feedbackContent = document.getElementById('aiFeedbackContent');
+                
+                let colorClass = hintData.isCorrect ? "bg-emerald-500/10 text-emerald-600" : (hintData.source === "ai" ? "bg-purple-500/10 text-purple-600" : "bg-red-500/10 text-red-500");
+                let iconClass = hintData.isCorrect ? "fa-check-circle text-emerald-500" : (hintData.source === "ai" ? "fa-lightbulb text-purple-500" : "fa-exclamation-circle text-red-400");
+                
+                feedbackContent.innerHTML = `<div class="p-4 ${colorClass} rounded text-sm font-medium"><div class="flex items-start gap-2"><i class="fas ${iconClass} mt-1"></i><div>${hintData.hint.replace(/\\n/g, '<br>')}</div></div></div>`;
+                window.updateHintNavigation();
+            }
+        };
+
+        window.getHelp = async function(section) {
+            window.hintLevels[section] = (window.hintLevels[section] || 1) + 1;
+            const feedbackContent = document.getElementById('aiFeedbackContent');
+            const loading = document.getElementById('aiFeedbackLoading');
+            const feedbackCard = document.getElementById('aiFeedbackCard');
+            const resizer = document.getElementById('resizer');
+            
+            if (!feedbackCard || !loading || !feedbackContent) return;
+
+            feedbackCard.classList.remove('h-0', 'hidden', 'feedback-closed');
+            feedbackCard.classList.add('feedback-open');
+            feedbackCard.style.height = '180px';
+            if (resizer) resizer.classList.remove('hidden');
+
+            loading.classList.remove('hidden');
+            feedbackContent.innerHTML = '';
+            feedbackContent.classList.add('hidden');
+
+            const inputId = (section === 'samplecode' || section === 'sample') ? 'sampleInput' : section + 'Input';
+            const inputEl = document.getElementById(inputId);
+            const userContent = (inputEl ? inputEl.value : '').toString();
+            const recipeContent = document.getElementById('recipeInput') ? document.getElementById('recipeInput').value : '';
+            const logicContent = document.getElementById('logicInput') ? document.getElementById('logicInput').value : '';
+
+            try {
+                const response = await fetch(`${API_BASE}/api/rewriteHintStream`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ category, problemID, section, userContent, recipeContent, logicContent, hintLevel: window.hintLevels[section] })
+                });
+                
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    const data = await response.json();
+                    window.hintHistory.push({ section, hint: data.hint, source: data.source || "ai", isCorrect: data.isCorrect || false });
+                    window.currentHintIndex = window.hintHistory.length - 1;
+                    window.updateHintNavigation();
+                    loading.classList.add('hidden');
+                    window.navigateHint(0);
+                    feedbackContent.classList.remove('hidden');
+                    return;
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullHint = "";
+                let source = "ai";
+                let isCorrect = false;
+                let isInitialized = false;
+                
+                const updateUI = (text) => {
+                    window.hintHistory[window.hintHistory.length - 1].hint = text;
+                    window.navigateHint(0);
+                };
+
+                let buffer = "";
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n\n');
+                    buffer = lines.pop();
+                    
+                    for (const line of lines) {
+                        const trimmedLine = line.trim();
+                        if (trimmedLine.startsWith('data: ')) {
+                            const dataStr = trimmedLine.substring(6).trim();
+                            if (dataStr === '[DONE]') break;
+                            try {
+                                const payload = JSON.parse(dataStr);
+                                if (payload.type === 'start') {
+                                    source = payload.source;
+                                    isCorrect = payload.isCorrect;
+                                    // Keep loader active, do not hide yet or show empty feedbackContent
+                                } else if (payload.type === 'chunk') {
+                                    if (!isInitialized) {
+                                        loading.classList.add('hidden');
+                                        feedbackContent.classList.remove('hidden');
+                                        window.hintHistory.push({ section, hint: "", source, isCorrect });
+                                        window.currentHintIndex = window.hintHistory.length - 1;
+                                        window.updateHintNavigation();
+                                        isInitialized = true;
+                                    }
+                                    fullHint += payload.text;
+                                    updateUI(fullHint);
+                                } else if (payload.type === 'error') {
+                                    if (!isInitialized) {
+                                        loading.classList.add('hidden');
+                                        feedbackContent.classList.remove('hidden');
+                                        window.hintHistory.push({ section, hint: "", source, isCorrect });
+                                        window.currentHintIndex = window.hintHistory.length - 1;
+                                        window.updateHintNavigation();
+                                        isInitialized = true;
+                                    }
+                                    fullHint += "\n" + payload.text;
+                                    updateUI(fullHint);
+                                }
+                            } catch (e) {
+                                console.error("Error parsing stream payload:", e);
+                            }
+                        }
+                    }
+                }
+                if (!isInitialized) {
+                    loading.classList.add('hidden');
+                    feedbackContent.classList.remove('hidden');
+                    window.hintHistory.push({ section, hint: fullHint || "No suggestions available.", source, isCorrect });
+                    window.currentHintIndex = window.hintHistory.length - 1;
+                    window.updateHintNavigation();
+                    window.navigateHint(0);
+                }
+            } catch (error) {
+                console.error('Help error:', error);
+                loading.classList.add('hidden');
+                feedbackContent.innerHTML = `<div class="p-3 bg-red-500/10 text-red-400 rounded text-sm">Failed to get help. Please try again.</div>`;
+                feedbackContent.classList.remove('hidden');
+            }
+        };
+
+        window.checkInput = async function(section) {
+            if (!window.useToken("check")) return;
+            
+            const btn = document.querySelector(`#btn-${section}`);
+            if(!btn) return;
+            
+            const originalText = btn.innerHTML;
+            btn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Checking...`;
+            
+            const inputId = (section === 'samplecode' || section === 'sample') ? 'sampleInput' : section + 'Input';
+            const inputEl = document.getElementById(inputId);
+            const userContent = inputEl ? inputEl.value : '';
+            const recipeContent = document.getElementById('recipeInput') ? document.getElementById('recipeInput').value : '';
+            const logicContent = document.getElementById('logicInput') ? document.getElementById('logicInput').value : '';
+            
+            try {
+                // 1. FAST LOCAL VALIDATION FIRST!
+                const localCheckResponse = await fetch(`${API_BASE}/api/checkInput`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ category, problemID, section, userInput: userContent, recipeContent, logicContent })
+                });
+                const localCheckData = await localCheckResponse.json();
+
+                if (localCheckData.correct) {
+                    window.hintHistory.push({ section, hint: localCheckData.feedback, source: "local", isCorrect: true });
+                    window.currentHintIndex = window.hintHistory.length - 1;
+                    window.updateHintNavigation();
+                    
+                    showToast("Excellent! Section completed.", "success");
+                    window.markComplete(section);
+                    return;
+                }
+
+                // 2. Fall back to stream for detailed step-by-step hint
+                const response = await fetch(`${API_BASE}/api/rewriteHintStream`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ category, problemID, section, userContent, recipeContent, logicContent, hintLevel: window.hintLevels[section] })
+                });
+                
+                const contentType = response.headers.get("content-type");
+                if (contentType && contentType.indexOf("application/json") !== -1) {
+                    const data = await response.json();
+                    
+                    window.hintHistory.push({ section, hint: data.hint, source: data.source || "ai", isCorrect: data.isCorrect });
+                    window.currentHintIndex = window.hintHistory.length - 1;
+                    window.updateHintNavigation();
+                    
+                    if (data.isCorrect) {
+                        showToast("Excellent! Section completed.", "success");
+                        window.markComplete(section);
+                    } else {
+                        window.hintLevels[section] = (window.hintLevels[section] || 1) + 1;
+                        showToast("Review the feedback and try again", "warning");
+                        const feedbackCard = document.getElementById('aiFeedbackCard');
+                        const feedbackContent = document.getElementById('aiFeedbackContent');
+                        if(feedbackCard && feedbackContent) {
+                            feedbackCard.classList.remove('h-0', 'hidden', 'feedback-closed');
+                            feedbackCard.classList.add('feedback-open');
+                            feedbackCard.style.height = '180px';
+                            window.navigateHint(0);
+                            feedbackContent.classList.remove('hidden');
+                        }
+                    }
+                    return;
+                }
+
+                // Handle Stream
+                const feedbackCard = document.getElementById('aiFeedbackCard');
+                const feedbackContent = document.getElementById('aiFeedbackContent');
+                const loading = document.getElementById('aiFeedbackLoading');
+                
+                if (feedbackCard && feedbackContent && loading) {
+                    feedbackCard.classList.remove('h-0', 'hidden', 'feedback-closed');
+                    feedbackCard.classList.add('feedback-open');
+                    feedbackCard.style.height = '180px';
+                    loading.classList.remove('hidden');
+                    feedbackContent.innerHTML = '';
+                    feedbackContent.classList.add('hidden');
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullHint = "";
+                let source = "ai";
+                let isCorrect = false;
+                let isInitialized = false;
+                
+                const updateUI = (text) => {
+                    window.hintHistory[window.hintHistory.length - 1].hint = text;
+                    window.navigateHint(0);
+                };
+
+                let buffer = "";
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    
+                    buffer += decoder.decode(value, { stream: true });
+                    const lines = buffer.split('\n\n');
+                    buffer = lines.pop();
+                    
+                    for (const line of lines) {
+                        const trimmedLine = line.trim();
+                        if (trimmedLine.startsWith('data: ')) {
+                            const dataStr = trimmedLine.substring(6).trim();
+                            if (dataStr === '[DONE]') break;
+                            try {
+                                const payload = JSON.parse(dataStr);
+                                if (payload.type === 'start') {
+                                    source = payload.source;
+                                    isCorrect = payload.isCorrect;
+                                    
+                                    if (loading) loading.classList.add('hidden');
+                                    if (feedbackContent) feedbackContent.classList.remove('hidden');
+                                    
+                                    window.hintHistory.push({ section, hint: "", source, isCorrect });
+                                    window.currentHintIndex = window.hintHistory.length - 1;
+                                    window.updateHintNavigation();
+                                    isInitialized = true;
+                                } else if (payload.type === 'chunk') {
+                                    if (!isInitialized) {
+                                        if (loading) loading.classList.add('hidden');
+                                        if (feedbackContent) feedbackContent.classList.remove('hidden');
+                                        window.hintHistory.push({ section, hint: "", source, isCorrect });
+                                        window.currentHintIndex = window.hintHistory.length - 1;
+                                        window.updateHintNavigation();
+                                        isInitialized = true;
+                                    }
+                                    fullHint += payload.text;
+                                    updateUI(fullHint);
+                                } else if (payload.type === 'error') {
+                                    if (!isInitialized) {
+                                        if (loading) loading.classList.add('hidden');
+                                        if (feedbackContent) feedbackContent.classList.remove('hidden');
+                                        window.hintHistory.push({ section, hint: "", source, isCorrect });
+                                        window.currentHintIndex = window.hintHistory.length - 1;
+                                        window.updateHintNavigation();
+                                        isInitialized = true;
+                                    }
+                                    fullHint += "\n" + payload.text;
+                                    updateUI(fullHint);
+                                }
+                            } catch (e) {
+                                console.error("Error parsing checkInput stream payload:", e);
+                            }
+                        }
+                    }
+                }
+                
+                if (isCorrect) {
+                    showToast("Excellent! Section completed.", "success");
+                    window.markComplete(section);
+                } else {
+                    window.hintLevels[section] = (window.hintLevels[section] || 1) + 1;
+                    showToast("Review the feedback and try again", "warning");
+                }
+                
+            } catch (e) {
+                showToast("Error checking input", "error");
+                console.error(e);
+            } finally {
+                if(btn) btn.innerHTML = originalText;
+            }
+        };
+
+        window.checkCode = async function() {
+            const feedbackContent = document.getElementById('aiFeedbackContent');
+            const loading = document.getElementById('aiFeedbackLoading');
+            const feedbackCard = document.getElementById('aiFeedbackCard');
+            const resizer = document.getElementById('resizer');
+            
+            if (feedbackCard) {
+                feedbackCard.classList.remove('h-0', 'hidden', 'feedback-closed');
+                feedbackCard.classList.add('feedback-open');
+                feedbackCard.style.height = '180px';
+                if (resizer) resizer.classList.remove('hidden');
+            }
+            
+            if(loading) loading.classList.remove('hidden');
+            if(feedbackContent) {
+                feedbackContent.innerHTML = '';
+                feedbackContent.classList.add('hidden');
+            }
+            
+            const inputEl = document.getElementById('sampleInput');
+            const code = inputEl ? inputEl.value : '';
+            
+            try {
+                // 1. FAST LOCAL VALIDATION FIRST via server checkInput!
+                const localCheckResponse = await fetch(`${API_BASE}/api/checkInput`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ category, problemID, section: 'samplecode', userInput: code })
+                });
+                const localCheckData = await localCheckResponse.json();
+
+                if (!localCheckData.correct) {
+                    window.hintHistory.push({ section: "samplecode", hint: localCheckData.feedback, source: "local", isCorrect: false });
+                    window.currentHintIndex = window.hintHistory.length - 1;
+                    window.updateHintNavigation();
+                    
+                    showToast("Review the feedback and try again", "warning");
+                    if (loading) loading.classList.add('hidden');
+                    window.navigateHint(0);
+                    if (feedbackContent) feedbackContent.classList.remove('hidden');
+                    return;
+                }
+
+                // 2. RUN JS SYNTAX CHECK
+                try {
+                    new Function(code);
+                    
+                    window.hintHistory.push({ section: "final check", hint: "Code syntax looks valid! Great job!", source: "local", isCorrect: true });
+                    window.currentHintIndex = window.hintHistory.length - 1;
+                    window.updateHintNavigation();
+
+                    if(loading) loading.classList.add('hidden');
+                    window.navigateHint(0);
+                    if(feedbackContent) feedbackContent.classList.remove('hidden');
+                    
+                    window.markComplete('samplecode');
+                    window.showModal("All challenges completed! You have successfully written the logic, recipe, ingredients, and the final code.", "success");
+                } catch (e) {
+                    window.hintHistory.push({ section: "final check", hint: `Syntax Error: ${e.message}. Please make sure your JavaScript code is syntactically correct.`, source: "local", isCorrect: false });
+                    window.currentHintIndex = window.hintHistory.length - 1;
+                    window.updateHintNavigation();
+
+                    if(loading) loading.classList.add('hidden');
+                    window.navigateHint(0);
+                    if(feedbackContent) feedbackContent.classList.remove('hidden');
+                    showToast("Syntax error in your code", "warning");
+                }
+            } catch (err) {
+                console.error("Check code error:", err);
+                if (loading) loading.classList.add('hidden');
+                showToast("Error checking code", "error");
+            }
+        };
+
+        window.clearFeedback = function() {
+            const feedbackCard = document.getElementById('aiFeedbackCard');
+            const resizer = document.getElementById('resizer');
+            if (feedbackCard) {
+                feedbackCard.classList.remove('feedback-open');
+                feedbackCard.classList.add('feedback-closed');
+                setTimeout(() => {
+                    feedbackCard.classList.add('hidden');
+                }, 300);
+            }
+            if (resizer) resizer.classList.add('hidden');
+        };
+
+        setTimeout(() => {
+            const mainContent = document.getElementById("mainContent");
+            if(mainContent) mainContent.classList.remove("opacity-0");
+            
+            if (problemID === "problem02") {
+                const pTitle = document.getElementById("problemTitle");
+                const pDesc = document.getElementById("problemDescription");
+                const pPhase = document.getElementById("challengePhaseBadge");
+                const pProblem = document.getElementById("challengeProblemBadge");
+                if(pPhase) pPhase.innerText = "Phase 1";
+                if(pProblem) pProblem.innerText = "Problem 2";
+                if(pTitle) pTitle.innerText = "Write a program to find the Sum of N Numbers.";
+                if(pDesc) pDesc.innerHTML = `
+                    <p>Write a JavaScript program that calculates the <strong>sum of all numbers from 1 to N</strong>.</p>
+                    <p>For example: if N = 5, the sum is <strong>1 + 2 + 3 + 4 + 5 = 15</strong>.</p>
+                    <p>Use a <strong>loop</strong> to add each number one by one and print the final result using <code>console.log()</code>.</p>
+                `;
+            }
+        }, 500);
+
+    } catch (e) {
+        console.error("Initialization error:", e);
+    }
+  </script>
+</body>
+</html>

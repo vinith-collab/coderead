@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign Up - CookDCode</title>
+  <link rel="icon" type="image/png" href="../Images/logo.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/signup.css" />
+  <style>
+    /* Instant Load */
+    body { opacity: 0; transition: opacity 0.2s ease-in; }
+    body.loaded { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <a href="newuser.html" class="btn-back" title="Go Back">
+        <i class="fas fa-arrow-left"></i>
+      </a>
+      <a href="newuser.html" class="brand">
+        <img src="../Images/logo.png" alt="cookDcode Logo" class="logo" onerror="this.src='https://via.placeholder.com/48?text=C'" />
+        <span>cookDcode</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Split Screen Container -->
+  <main class="signup-page-wrapper">
+    
+    <!-- Left Side: Branding / Info -->
+    <div class="signup-left">
+      <div class="left-content">
+        <h1>Join the CookDCode Community</h1>
+        <p>Master data structures, algorithms, and ace your following interviews with our curated problem sets.</p>
+        
+        <div class="features-list">
+          <div class="feature-item">
+            <div class="icon-box"><i class="fas fa-laptop-code"></i></div>
+            <div class="feature-text">
+              <h4>Interactive Challenges</h4>
+              <span>Test your code with real-time feedback</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+            <div class="feature-text">
+              <h4>Track Your Progress</h4>
+              <span>Watch your skills grow problem by problem</span>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="icon-box"><i class="fas fa-trophy"></i></div>
+            <div class="feature-text">
+              <h4>Earn Badges</h4>
+              <span>Showcase your achievements to top recruiters</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side: Form -->
+    <div class="signup-right">
+      <div class="signup-card">
+        <div class="signup-header">
+          <h2 class="signup-title">Create an Account</h2>
+          <p class="signup-subtitle">Start your coding journey with CookDCode</p>
+        </div>
+
+        <form id="signupForm" autocomplete="off">
+          <div class="form-row">
+            <!-- First Name -->
+            <div class="form-group half-width">
+              <label for="firstname" class="form-label">First Name</label>
+              <div class="input-container">
+                <input type="text" id="firstname" name="firstname" class="form-input" placeholder="John" required>
+                <i class="fas fa-user input-icon"></i>
+              </div>
+            </div>
+
+            <!-- Last Name -->
+            <div class="form-group half-width">
+              <label for="lastname" class="form-label">Last Name</label>
+              <div class="input-container">
+                <input type="text" id="lastname" name="lastname" class="form-input" placeholder="Doe" required>
+                <i class="fas fa-user input-icon"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div class="form-group">
+            <label for="email" class="form-label">Email Address</label>
+            <div class="input-container">
+              <input type="email" id="email" name="email" class="form-input" placeholder="john@example.com" required>
+              <i class="fas fa-envelope input-icon"></i>
+            </div>
+          </div>
+
+          <!-- Phone Number -->
+          <div class="form-group">
+            <label for="phone" class="form-label">Phone Number</label>
+            <div class="input-container">
+             <input type="tel" id="phone" name="phone"
+class="form-input"
+placeholder="Enter your phone number"
+autocomplete="off"
+required>
+              <i class="fas fa-phone input-icon"></i>
+            </div>
+          </div>
+
+
+
+          <!-- Password -->
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-container">
+               <input type="password" id="password" name="password" class="form-input" placeholder="Create a strong password" autocomplete="new-password" required minlength="8">
+               <i class="fas fa-lock input-icon"></i>
+               <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('password')"></i>
+            </div>
+          </div>
+          
+          <!-- Confirm Password -->
+          <div class="form-group">
+            <label for="confirm_password" class="form-label">Confirm Password</label>
+            <div class="input-container">
+             <input type="password" id="confirm_password" name="confirm_password" class="form-input" placeholder="Repeat password" autocomplete="new-password" required minlength="8">
+               <i class="fas fa-lock input-icon"></i>
+               <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('confirm_password')"></i>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn-submit">
+            Sign Up <i class="fas fa-arrow-right"></i>
+          </button>
+
+          <!-- Divider -->
+          <div class="divider">
+            <span>OR</span>
+          </div>
+          
+          <!-- Social Signup Buttons -->
+          <div class="social-login">
+            <button type="button" class="btn-social google">
+              <i class="fab fa-google" style="color: #ea4335;"></i> <span style="color: var(--text-main);">Sign up with Google</span>
+            </button>
+          </div>
+
+        </form>
+
+        <div class="signup-footer">
+          Already have an account? <a href="login.html">Click here to Login</a>
+        </div>
+ 
+      </div>
+    </div>
+  </main>
+
+  <!-- Professional Status Modal -->
+  <div id="statusModal" class="modal-overlay">
+    <div class="modal-content">
+      <div id="modalIcon" class="modal-icon">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <h3 id="modalTitle" class="modal-title">Success!</h3>
+      <p id="modalMessage" class="modal-message">Your account has been created.</p>
+      <button class="modal-btn" onclick="closeModal()">Continue</button>
+    </div>
+  </div>
+
+  <script>
+    // ----- MODAL UTILITY -----
+    window.showModal = function(msg, type = 'success') {
+      const modal = document.getElementById('statusModal');
+      const icon = document.getElementById('modalIcon');
+      const title = document.getElementById('modalTitle');
+      const message = document.getElementById('modalMessage');
+      
+      message.textContent = msg;
+      
+      if(type === 'error' || type === 'warning') {
+        icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        icon.style.color = '#ef4444';
+        icon.style.backgroundColor = '#fef2f2';
+        title.textContent = 'Action Required';
+      } else {
+        icon.innerHTML = '<i class="fas fa-check-circle"></i>';
+        icon.style.color = '#10b981';
+        icon.style.backgroundColor = '#ecfdf5';
+        title.textContent = 'Success!';
+      }
+      
+      modal.classList.add('active');
+    };
+
+    window.closeModal = function() {
+      document.getElementById('statusModal').classList.remove('active');
+    };
+
+    window.togglePasswordVisibility = function(id) {
+    const input = document.getElementById(id);
+    const icon = input.parentElement.querySelector('.toggle-password');
+    if (input.type === 'password') {
+      input.type = 'text';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    } else {
+      input.type = 'password';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    }
+  };
+
+  window.addEventListener('DOMContentLoaded', () => document.body.classList.add('loaded'));
+
+    const inputs = document.querySelectorAll('.form-input');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.parentElement.classList.add('focused');
+      });
+      input.addEventListener('blur', () => {
+        input.parentElement.parentElement.classList.remove('focused');
+      });
+    });
+  </script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBoAb7b3DJDMRmNwOSAHTnscM_-JuVnILI",
+      authDomain: "cookdcode-4ce23.firebaseapp.com",
+      databaseURL: "https://cookdcode-4ce23-default-rtdb.firebaseio.com",
+      projectId: "cookdcode-4ce23",
+      storageBucket: "cookdcode-4ce23.firebasestorage.app",
+      messagingSenderId: "419836764054",
+      appId: "1:419836764054:web:ab9968082fb793029f07b7"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+
+    const form = document.getElementById("signupForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      
+      const firstname = document.getElementById("firstname").value;
+      const lastname = document.getElementById("lastname").value;
+      const email = document.getElementById("email") ? document.getElementById("email").value : "user@example.com";
+      const phone = document.getElementById("phone").value;
+      const password = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm_password").value;
+
+      if(password !== confirm){
+        showModal("Passwords do not match", "error");
+        return;
+      }
+
+      try {
+        const userData = {
+          firstname,
+          lastname,
+          email,
+          phone,
+          password,
+          tokens: 10,
+          createdAt: new Date().toISOString()
+        };
+
+        const newUser = await push(ref(db, "users"), userData);
+        
+        localStorage.setItem("userId", newUser.key);
+        localStorage.setItem("userPhone", phone);
+        localStorage.setItem("userEmail", email);
+
+        showModal("Signup Successful!", "success");
+
+        setTimeout(() => {
+          window.location.href = "ctc.html";
+        }, 2000);
+      } catch (error) {
+        showModal("Error: " + error.message, "error");
+      }
+    });
+
+    /* SOCIAL SIGNIN */
+    document.querySelector(".btn-social.google").addEventListener("click", async () => {
+      const provider = new GoogleAuthProvider();
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        await set(ref(db, "users/" + user.uid), {
+          firstname: user.displayName.split(' ')[0],
+          lastname: user.displayName.split(' ').slice(1).join(' ') || '',
+          email: user.email,
+          tokens: 10,
+          provider: "google"
+        });
+        localStorage.setItem("userId", user.uid);
+        localStorage.setItem("userEmail", user.email);
+        showModal("Login Successful!", "success");
+        setTimeout(() => { window.location.href = "ctc.html"; }, 2000);
+      } catch (error) { showModal(error.message, "error"); }
+    });
+
+
+  </script>
+<div id="signupPopup" class="signup-popup">
+<i class="fas fa-check-circle"></i>
+Signup Successful
+</div>
+</body>
+
